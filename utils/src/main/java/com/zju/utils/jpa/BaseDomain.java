@@ -89,7 +89,7 @@ abstract public class BaseDomain implements Serializable {
         if(version==null){
             version =1;
         }else{
-            version++;
+            version=2;
         }
     }
 }

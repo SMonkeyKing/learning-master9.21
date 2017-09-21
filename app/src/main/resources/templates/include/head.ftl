@@ -21,6 +21,7 @@
 <script src="${c_static}/dwz/js/tinymce.min.js"></script>
 <script src="${c_static}/dwz/js/editor/ueditor.all.min.js" type="text/javascript"></script>
 <script src="${c_static}/dwz/js/editor/ueditor.config.js" type="text/javascript"></script>
+<script src="${c_static}/dwz/js/pdfobject.js" type="text/javascript"></script>
 <!--<script src="${c_static}/dwz/xheditor/xheditor-1.2.2.min.js" type="text/javascript"></script>-->
 
 <script type="text/javascript">

@@ -7,7 +7,7 @@
                 <dl class="nowrap">
                     <dt>课件名称：</dt>
                     <dd>
-                        <input type="text" name="name" class="required" value="${courseWare.name!}"/>
+                        <input type="text" style="width: 600px" name="name" class="required" value="${courseWare.name!}"/>
                     </dd>
                 </dl>
             </fieldset>

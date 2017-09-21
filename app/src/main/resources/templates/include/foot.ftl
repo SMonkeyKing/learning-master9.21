@@ -1,1 +1,1 @@
-<div id="footer"> </div>
+<div id="footer"> Copyright © 2017 迪畅教学</div>

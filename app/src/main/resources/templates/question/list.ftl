@@ -1,75 +1,161 @@
+<style>
+    #content{
+        height: auto;
+        margin: 15px auto 5px 12px;
+        /*border:1px solid #B3E4EB;*/
+    }
+    #content img{
+        width: 10%;
+        height:10%;
+    }
+    .panelContent{
+        border:1px solid #B3E4EB;
+        height: auto;
+    }
+    #answer{
+        height: auto;
+        margin: 15px auto 5px 12px;
+        /*border:1px solid #B3E4EB;*/
+    }
+    .accordionContent{
+        height: auto;
+    }
+</style>
+
 <form id="pagerForm" method="post" action="${ctx}/question/config">
     <input type="hidden" name="pageNum" value="${page.currentPage!}"/>
     <input type="hidden" name="numPerPage" value="${page.numPerPage!}"/>
     <input type="hidden" name="orderBy" value="desc">
     <input type="hidden" name="orderField" value="lastUpdated">
-    <input type="hidden" name="name" value="${courseWare.name!}">
+    <input type="hidden" name="name" value="${questionDO.subject!}">
 </form>
 
 <div class="pageHeader">
-    <form onsubmit="return navTabSearch(this);" action="${ctx}/question/config" class="required-validate" method="post">
+    <#--<div id="sidebar" >
+        <div class="accordion" fillSpace="sidebar" >
+            <div class="accordionHeader">
+                <h2><span>Folder</span>教学管理平台</h2>
+            </div>
+            <div class="accordionContent" >
+                <ul class="tree treeFolder">
+                    <li><a href="javascript:void(0)" >专题1</a></li>
+                    <ul>
+                        <li><a href="javascript:void(0)" >章节1</a></li>
+                        <li><a href="javascript:void(0)" >章节2</a></li>
+                        <li><a href="javascript:void(0)" >章节3</a></li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+    <form id="questionForm" onsubmit="return navTabSearch(this);" action="${ctx}/question/config" class="required-validate" method="post">
         <div class="searchBar">
+
             <table class="searchContent">
                 <tr>
-                    <td>
-                        课件名称：<input type="text"  name="name" maxlength="20"
-                                     value="${courseWare.name!}"/>
-                    </td>
+                    <td>题目类型：</td>
+                    <input type="hidden" name="typeid"  id="typeid" value="${typeid}">
+                    <input type="hidden" name="type"  id="type" >
+                    <td><button id="btn0" type="submit" value="0">全部</button></td>
+                    <td><button id="btn1" type="submit" value="1">选择题</button></td>
+                    <td><button id="btn2" type="submit" value="2">填空题</button></td>
+                    <td><button id="btn3" type="submit" value="3">计算题</button></td>
                 </tr>
+                <#--<tr>
+                    <td><button style="float: right">全部加入试卷</button></td>
+                    &lt;#&ndash;<td><button style="float: right">查看试题篮</button></td>&ndash;&gt;
+                </tr>-->
             </table>
-            <div class="subBar">
+
+            <#--<div class="subBar">
                 <ul>
                     <li>
                         <div class="buttonActive add">
                             <div class="buttonContent">
-                                <button type="submit">查询</button>
+                                <button onclick="addAllToPaper()">全部加入试卷</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="buttonActive add">
+                            <div class="buttonContent">
+                                <button onclick="addAllToPaper()">全部加入试卷</button>
                             </div>
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div>-->
         </div>
     </form>
+        <div class="subBar">
+            <ul>
+                <li>
+                    <div>
+                        <div class="buttonContent" style="float: right;">
+                            <button onclick="addAllToPaper()">全部加入试卷</button>
+                            <span>&nbsp;&nbsp;</span>
+                            <#--<button><a href="${ctx}/paper/paperBasket" target="dialog" ></a></button>-->
+                        </div>
+                    </div>
+                </li>
+
+                <li >
+                    <div>
+                        <div class="buttonContent"  style="float: right;">
+                            <a href="${ctx}/paper/paperBasket" target="dialog" ><button>查看试题篮</button></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <#--<div class="subBar" style="float: right">
+            <table>
+                <tr>
+                    <td style="float: right"><a class="button" href="#" id="addAll" onclick="addAllToPaper()">全部加入试卷</a></td>
+                    <td style="float: right"><a class="button" href="${ctx}/paper/paperBasket" target="dialog" ><span>查看试题篮</span></a></td>
+                </tr>
+            </table>
+        </div>-->
+        <#--<div class="panelBar">
+            <a class="button" href="${ctx}/paper/paperBasket" target="dialog" ><span>查看试题篮</span></a>
+            <span>&nbsp;&nbsp;</span>
+            <a class="button" href="#"  onclick="addAllToPaper();" ><span>全部加入试卷</span></span></a>
+        </div>-->
 </div>
 <div class="pageContent">
-    <div class="panelBar">
+   <div class="panelBar">
         <ul class="toolBar">
-            <li><a class="add" href="${ctx}/question/prepareAdd" target="navTab"><span>增加</span></a></li>
+            <li><a class="add" href="${ctx}/question/prepareAdd?typeid=${typeid}" target="navTab"><span>增加</span></a></li>
         </ul>
     </div>
-    <table class="table" width="100%" layoutH="138">
-        <thead>
-        <tr align="center">
-            <th width="50"><b>序号</b></th>
-            <th width="100"><b>名称</b></th>
-            <th width="70"><b>上传时间</b></th>
-            <th width="230"><b>操作</b></th>
-        </tr>
-        </thead>
-        <tbody>
-        <#if courseWares??&&courseWares?size gt 0>
-            <#list courseWares as courseWare>
-            <tr align="center">
-                <td>${courseWare_index?if_exists+page.pageNum*page.numPerPage+1}</td>
-                <td>${courseWare.name!}</td>
-                <td>${courseWare.dateCreated!}</td>
-                <td>
-                    <!-- 下载 -->
-                    <a style="color:blue" href="${courseWare.url!}">下载</a>
-                    <!-- 修改 -->
-                    <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}" target="navTab">修改</a>
-                    <!-- 作废 -->
-                    <a style="color:blue" href="${ctx}/courseWare/delete?id=${courseWare.id}" target="ajaxTodo" title="温馨提示：是否确认删除" >删除</a>
-                </td>
-            </tr>
-            </#list>
-        <#else>
-        <tr>
-            <td><font color="red">很抱歉，系统找不到您的记录，换个条件试试</font></td>
-        </tr>
-        </#if>
-        </tbody>
-    </table>
+        <div class="accordionContent" layoutH="87">
+
+        <#--<div class="pageFormContent" layoutH="138">-->
+            <#if questionDOs??&&questionDOs?size gt 0>
+                <#list questionDOs as questionDO>
+                    <div class="panelContent" >
+                        <div id="content">
+                            ${questionDO.getContent()!}
+                        </div>
+                    </div>
+                    <div class="panelBar">
+                        <ul class="toolBar">
+                            <li style="float: left"><a class="edit" href="${ctx}/question/prepareUpdate?id=${questionDO.getId()}" target="navTab" ><span>编辑</span></a></li>
+                            <li style="float: right"><a class="add" href="javascript:void(0)" name="add${questionDO.getId()}"onclick="addToPaper(${questionDO.getId()});" ><span id="add">加入试卷</span></a></li>
+                            <#--<li style="float: right"><a class="add" href="${ctx}/paper/addCookies?questionId=${questionDO.getId()!}" ><span>加入试卷</span></a></li>-->
+                        </ul>
+                    </div>
+                    <div style="display:none;" class="panelContent" >
+                        <div id="answer">
+                            ${questionDO.getAnswer()!}
+                        </div >
+                    </div>
+                </#list>
+
+
+            </#if>
+        </div>
+
     <div class="panelBar">
         <div class="pages">
             <span>显示</span>
@@ -87,3 +173,56 @@
     </div>
 </div>
 <div class="top"></div>
+<script>
+    $(function () {
+        $("#btn0").click(
+            function () {
+                $("#type").val($("#btn0").val());
+            }
+        );
+        $("#btn1").click(
+                function () {
+                    $("#type").val($("#btn1").val());
+                }
+        );
+        $("#btn2").click(
+                function () {
+                    $("#type").val($("#btn2").val());
+                }
+        );
+        $("#btn3").click(
+                function () {
+                    $("#type").val($("#btn3").val());
+                }
+        );
+
+    });
+    
+    function  addToPaper(id) {
+        /*var add = document.getElementsById("add");
+        add.innerHTML = "已加入试卷"
+        add.disabled = true;
+        */
+        $.getJSON("${ctx}/paper/addCookies?questionId="+id,function () {
+            //alert(id+"加入成功");
+        });
+
+        $.ajax({
+            url: "${ctx}/paper/addCookies?questionId="+id,
+            context: document.getElementsByName("add"+id),
+            success: function(){
+
+                $(this).css("color","#CCC");
+                $(this).innerHTML = "已加入试卷";
+                $(this).unbind("click");
+                $(this).disabled = true;
+            }});
+    }
+
+
+    function addAllToPaper() {
+        $.getJSON("${ctx}/paper/addAll?typeid=${type}",function () {
+            //alert("加入成功");
+        });
+    }
+</script>

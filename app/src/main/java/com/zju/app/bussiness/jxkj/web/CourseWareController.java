@@ -1,10 +1,13 @@
 package com.zju.app.bussiness.jxkj.web;
 
+import com.zju.app.business.stjj.service.LeftMenuService;
 import com.zju.app.bussiness.jxkj.service.CourseWareService;
 import com.zju.model.CourseWareDO;
+import com.zju.model.LeftMenuDO;
 import com.zju.utils.Lang;
 import com.zju.utils.dwz.AjaxResponseVo;
 import com.zju.utils.dwz.DwzPageVo;
+import com.zju.utils.log.Log;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.*;
 
@@ -33,8 +37,11 @@ public class CourseWareController {
     @Autowired
     CourseWareService courseWareService;
 
+    @Autowired
+    LeftMenuService leftMenuService;
+
     @ModelAttribute
-    public void model(@RequestParam(value = "id", required = false) String id, Map<String, Object> model) {
+    public void model(@RequestParam(name = "id", required = false) Integer id, Map<String, Object> model) {
         if (!Lang.isEmpty(id)) {
             CourseWareDO courseWare = courseWareService.findOne(id);
             //如果有id存在，首先查出数据库中的对象，避免表单中未出现的空属性覆盖掉原有的值
@@ -43,17 +50,37 @@ public class CourseWareController {
     }
 
     @RequestMapping(value = {"/config"})
-    public String list(CourseWareDO courseWare, DwzPageVo page, Map model) {
-        Page<CourseWareDO> pageLists = courseWareService.findAll(courseWare, page.getPageable());
+    public String list(@RequestParam(name = "typeid")Integer id, CourseWareDO courseWare, DwzPageVo page, Map model, HttpServletRequest request) {
+        Page<CourseWareDO> pageLists = courseWareService.findAll(id,courseWare, page.getPageable());
         page.setTotalCount(pageLists.getTotalElements());
         model.put("courseWare", courseWare);
         model.put("page", page);
         model.put("courseWares", pageLists.getContent());
+        //把菜单的id传到前端
+        model.put("typeid",id);
+        Integer roleId = (Integer) request.getSession().getAttribute("role");
+        model.put("role",roleId);
         return "/courseWare/list";
     }
 
+    @RequestMapping(value = {"/video/config"})
+    public String videoList(@RequestParam(name = "typeid")Integer id, CourseWareDO courseWare, DwzPageVo page, Map model, HttpServletRequest request) {
+        Page<CourseWareDO> pageLists = courseWareService.findAll(id,courseWare, page.getPageable());
+        page.setTotalCount(pageLists.getTotalElements());
+        model.put("courseWare", courseWare);
+        model.put("page", page);
+        model.put("courseWares", pageLists.getContent());
+        //把菜单的id传到前端
+        model.put("typeid",id);
+        Integer roleId = (Integer) request.getSession().getAttribute("role");
+        model.put("role",roleId);
+        return "/courseWare/videoList";
+    }
+
     @RequestMapping(value = {"/prepareAdd"})
-    public String prepareAdd() {
+    public String prepareAdd(@RequestParam(name = "typeid")String id,Map model)
+    {
+        model.put("typeid",id);
         return "/courseWare/add";
     }
 
@@ -63,24 +90,39 @@ public class CourseWareController {
         return "/courseWare/update";
     }
 
-
+    @RequestMapping(value = {"/playVideo"})
+    public String playVideo(@RequestParam(name = "url")String url,Map model)
+    {
+        model.put("videoUrl",url);
+        return "/playVideo";
+    }
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResponseVo save(@RequestParam(name = "file") MultipartFile[] files) {
-        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS, "操作成功", "课件列表", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+    public AjaxResponseVo save(@RequestParam(name = "file") MultipartFile[] files,
+                               @RequestParam(name = "uploadName")String uploadName,@RequestParam(name="typeid")Integer id) {
+        LeftMenuDO leftMenuDO = leftMenuService.findOne(id);
+        String typeName = leftMenuDO.getTitle();
+        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
+                "操作成功", typeName, AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+
 
         try {
             List<CourseWareDO> courseWareDOList = new ArrayList<>();
             for (MultipartFile file : files) {
                 if (file != null) {
                     CourseWareDO courseWare = new CourseWareDO();
-                    courseWare.setName(file.getOriginalFilename());
+                    String oldname = file.getOriginalFilename();
+                    courseWare.setName(oldname);
                     String suffixName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 
-                    String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
+                    //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
+                    String newFileName = "D:\\work\\courseWare\\" + oldname;
                     System.out.print("0000000"+newFileName);
                     FileCopyUtils.copy(file.getBytes(), new File(newFileName));
-                    courseWare.setUrl(newFileName);
+                    String url = "http://localhost/courseWare/"+oldname;
+                    courseWare.setUrl(url);
+                    courseWare.setTypeid(id);
+                    courseWare.setUploadName(uploadName);
                     courseWareDOList.add(courseWare);
                 }
             }
@@ -96,8 +138,11 @@ public class CourseWareController {
 
     @RequestMapping(value = {"/update"}, method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResponseVo update(CourseWareDO courseWare) {
-        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS, "操作成功", "课件列表", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+    public AjaxResponseVo update(CourseWareDO courseWare,@RequestParam(name="typeid")Integer id) {
+        LeftMenuDO leftMenuDO = leftMenuService.findOne(id);
+        String typeName = leftMenuDO.getTitle();
+        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
+                "操作成功", typeName, AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
         try {
             courseWareService.save(courseWare);
         } catch (Exception e) {
@@ -112,8 +157,13 @@ public class CourseWareController {
     @RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo delete(CourseWareDO courseWare) {
-        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS, "已经作废", "课件列表");
+        Integer typeId = courseWare.getTypeid();
+        LeftMenuDO leftMenuDO = leftMenuService.findOne(typeId);
+        String typeName = leftMenuDO.getTitle();
+        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
+                "已经作废", typeName);
         try {
+            logger.info("0000000000000"+courseWare.getName()+courseWare.getUrl());
             courseWare.setDeleteFlag(true);
             courseWareService.save(courseWare);
         } catch (Exception e) {

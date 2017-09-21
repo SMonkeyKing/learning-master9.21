@@ -29,14 +29,17 @@ public class LeftMenuService {
     @Autowired
     LeftMenuRepos leftMenuRepos;
 
-    public List<LeftMenuDO> findAll()
+    public List<LeftMenuDO> findAll(Integer roleId)
     {
         Specification querySpecification = new Specification<LeftMenuDO>()
         {
             @Override
             public Predicate toPredicate(Root<LeftMenuDO> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
-                predicates.add(criteriaBuilder.lessThan(root.get("level").as(Integer.class),5));
+                if(roleId==2)
+                {
+                    predicates.add(criteriaBuilder.equal(root.get("role").as(Integer.class),roleId));
+                }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         };
@@ -65,5 +68,10 @@ public class LeftMenuService {
 
         }
         return roots;
+    }
+
+    public LeftMenuDO findOne(Integer id)
+    {
+        return leftMenuRepos.findOne(id);
     }
 }

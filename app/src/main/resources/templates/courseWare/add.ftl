@@ -6,17 +6,25 @@
                 <dl class="nowrap">
                     <dt>上传课件：</dt>
                     <dd>
-                    <input id="addFile" type="button" value="添加文件">
-                    <div id="fileDiv">
-                        <input type="file" name="file"/>
-                    </div>
+                        <input type="hidden" value="${typeid}" name="typeid"/>
+                        <input id="addFile" type="button" value="添加文件">
+                        <div id="fileDiv">
+                            <input type="file" name="file" multiple="multiple"/>
+                        </div>
+                    </dd>
+
+                </dl>
+                <dl class="nowrap">
+                    <dt>上传者姓名：</dt>
+                    <dd>
+
+                        <div>
+                            <input type="text" name="uploadName"/>
+                        </div>
                     </dd>
                 </dl>
-
             </fieldset>
-            <div id="editor">
 
-            </div>
         </div>
         <div class="formBar">
             <ul>
@@ -30,16 +38,6 @@
 </div>
 
 <script type="text/javascript">
-
-    var E = window.wangEditor;
-    var editor = new E('#editor');
-    // 或者 var editor = new E( document.getElementById('#editor') )
-    editor.customConfig.uploadImgShowBase64 = true;
-    //editor.customConfig.uploadImgServer = '/upload';
-    // 隐藏“网络图片”tab
-    //editor.customConfig.showLinkImg = false;
-
-    editor.create();
 
     $(function () {
         $("#addFile").click(function () {

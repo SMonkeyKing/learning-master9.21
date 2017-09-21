@@ -1,15 +1,9 @@
 <script>
     function doAdd()
     {
-        $("#content").val(editor1.txt.html());
+        $("#question").val(editor1.txt.html());
         //alert(editor1.txt.html());
         $("#answer").val(editor2.txt.html());
-        /*$.ajax({
-            url:'${ctx}/question/upload'
-            success:function (data) {
-                $("#content").val(data);
-            }
-        });*/
     }
 </script>
 <div class="pageContent">
@@ -18,6 +12,7 @@
             <fieldset>
                 <legend>添加题目</legend>
                 <dl class="nowrap">
+                    <input type="hidden" name="typeid" value="${typeid}" />
                     <dt>题目类型：</dt>
                     <dd>
                         <select name="type">
@@ -30,14 +25,20 @@
                 <dl class="nowrap">
                     <dt>题目描述：</dt>
                     <dd>
-                        <input  type="hidden" id="content" name="content" />
+                        <input  type="hidden" id="question" name="question" />
                         <div id="editor1" name="editorContent">
 
                         </div>
                     </dd>
                 </dl>
                 <dl class="nowrap">
-                    <dt>题目答案：</dt>
+                    <dt>选择题答案：</dt>
+                    <dd>
+                        <input  type="text" id="xztAnswer" name="xztAnswer" />
+                    </dd>
+                </dl>
+                <dl class="nowrap">
+                    <dt>题目答案及解析：</dt>
                     <dd>
                         <input  type="hidden" id="answer" name="answer" />
                         <div id="editor2" name="editorAnswer">
@@ -62,33 +63,29 @@
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor1 = new E('#editor1');
-    var editor2 = new E('#editor2');
-    // 或者 var editor = new E( document.getElementById('#editor') )
-    //editor1.customConfig.uploadImgShowBase64 = true;
-    editor2.customConfig.uploadImgShowBase64 = true;
     editor1.customConfig.uploadImgServer = '${ctx}/question/uploadImg';
     editor1.customConfig.uploadFileName = 'myimgfile';
     editor1.customConfig.uploadImgHooks = {
         customInsert: function (insertImg, result, editor1) {
-            // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
-            // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
-
-            // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
             var url = result.url;
             insertImg(url);
-
-            // result 必须是一个 JSON 格式字符串！！！否则报错
         }
 
     }
-
-    //editor.customConfig.uploadImgServer = '/upload';
     // 隐藏“网络图片”tab
-    //editor.customConfig.showLinkImg = false;
+    //editor1.customConfig.showLinkImg = false;
     editor1.create();
-    editor2.create();
-    //var content = editor.txt.html();
+    var editor2 = new E('#editor2');
+    editor2.customConfig.uploadImgServer = '${ctx}/question/uploadImg';
+    editor2.customConfig.uploadFileName = 'myimgfile';
+    editor2.customConfig.uploadImgHooks = {
+        customInsert: function (insertImg, result, editor2) {
+            var url = result.url;
+            insertImg(url);
+        }
 
-    //alert(editor1.txt.html());
-    //$("#content").val($('#editor').val());
+    }
+    // 隐藏“网络图片”tab
+    //editor2.customConfig.showLinkImg = false;
+    editor2.create();
 </script>

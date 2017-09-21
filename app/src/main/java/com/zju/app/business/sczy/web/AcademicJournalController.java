@@ -17,6 +17,7 @@ import java.util.Map;
 
 /**
  * Created by lujie on 2017/8/16.
+ * 素材资源——学科期刊
  */
 @Controller
 @RequestMapping("/sczy/academicJournal")

@@ -4,46 +4,52 @@
     <input type="hidden" name="orderBy" value="desc">
     <input type="hidden" name="orderField" value="lastUpdated">
     <input type="hidden" name="name" value="${courseWare.name!}">
+    <input type="hidden" name="typeid" value="${typeid}">
 </form>
 
 <div class="pageHeader">
-    <form onsubmit="return navTabSearch(this);" action="${ctx}/courseWare/config" class="required-validate" method="post">
+    <form onsubmit="return navTabSearch(this);" action="${ctx}/courseWare/config?typeid=${typeid}" class="required-validate" method="post">
         <div class="searchBar">
             <table class="searchContent">
+                <input type="hidden" name="typeid" value="${typeid}">
                 <tr>
                     <td>
-                        课件名称：<input type="text"  name="name" maxlength="20"
+                        名称：<input type="text"  name="name" maxlength="20"
                                      value="${courseWare.name!}"/>
                     </td>
-                </tr>
-            </table>
-            <div class="subBar">
-                <ul>
-                    <li>
-                        <div class="buttonActive add">
+                    <td>
+                        <div class="buttonContent">
+                            <button type="submit">查询</button>
+                        </div>
+                        <#--<div class="buttonActive add">
                             <div class="buttonContent">
                                 <button type="submit">查询</button>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        </div>-->
+
+                    </td>
+                </tr>
+            </table>
+
         </div>
     </form>
 </div>
 <div class="pageContent">
+    <#if (role<2)>
     <div class="panelBar">
         <ul class="toolBar">
-            <li><a class="add" href="${ctx}/courseWare/prepareAdd" target="navTab"><span>增加</span></a></li>
+            <li><a class="add" href="${ctx}/courseWare/prepareAdd?typeid=${typeid}" target="navTab"><span>增加</span></a></li>
         </ul>
     </div>
-    <table class="table" width="100%" layoutH="138">
+    </#if>
+    <table class="table" width="100%" layoutH="110">
         <thead>
         <tr align="center">
             <th width="50"><b>序号</b></th>
-            <th width="100"><b>名称</b></th>
+            <th width="200"><b>名称</b></th>
+            <th width="60"><b>上传者</b></th>
             <th width="70"><b>上传时间</b></th>
-            <th width="230"><b>操作</b></th>
+            <th width="150"><b>操作</b></th>
         </tr>
         </thead>
         <tbody>
@@ -51,16 +57,23 @@
             <#list courseWares as courseWare>
             <tr align="center">
                 <td>${courseWare_index?if_exists+page.pageNum*page.numPerPage+1}</td>
-                <td>${courseWare.name!}</td>
+                <td><a href="${courseWare.url!}" onclick="openWord(${courseWare.url!})" target="_blank">${courseWare.name!}</a></td>
+                <#--<td><embed src="${courseWare.url!}">${courseWare.name!}</embed></td>-->
+                <td>${courseWare.uploadName!}</td>
                 <td>${courseWare.dateCreated!}</td>
+
                 <td>
+
                     <!-- 下载 -->
                     <a style="color:blue" href="${courseWare.url!}">下载</a>
+                    <#if (role<2)>
                     <!-- 修改 -->
-                    <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}" target="navTab">修改</a>
+                    <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}&typeid=${courseWare.typeid}" target="navTab">修改</a>
                     <!-- 作废 -->
                     <a style="color:blue" href="${ctx}/courseWare/delete?id=${courseWare.id}" target="ajaxTodo" title="温馨提示：是否确认删除" >删除</a>
+                    </#if>
                 </td>
+
             </tr>
             </#list>
         <#else>
@@ -87,3 +100,16 @@
     </div>
 </div>
 <div class="top"></div>
+<script>
+    function  openWord(url1) {
+        /*window.open("http://localhost/courseWare/教学资源管理平台.doc");*/
+        /*var cmd = new ActiveXObject('WScript.Shell');
+        cmd.Run('winword http://localhost/courseWare/教学资源管理平台.doc');*/
+        var url = "http://localhost/courseWare/教学资源管理平台.doc";
+        //直接打开word
+        var word = new ActiveXObject("Word.Application");
+        word.Visible = true;
+        word.Activate();//打开的word激活房子最前面窗口
+        word.Documents.Open(url);
+    }
+</script>

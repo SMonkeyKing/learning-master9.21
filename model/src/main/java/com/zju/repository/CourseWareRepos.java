@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * Created by xujingfeng on 2017/8/11.
  */
-public interface CourseWareRepos extends JpaRepository<CourseWareDO, String>, JpaSpecificationExecutor<CourseWareDO> {
+public interface CourseWareRepos extends JpaRepository<CourseWareDO, Integer>, JpaSpecificationExecutor<CourseWareDO> {
 }

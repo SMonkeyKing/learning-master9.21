@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * Created by lujie on 2017/8/13.
  */
-public interface QuestionRepos extends JpaRepository<QuestionDO,String>,JpaSpecificationExecutor<QuestionDO>{
+public interface QuestionRepos extends JpaRepository<QuestionDO,Integer>,JpaSpecificationExecutor<QuestionDO>{
 }

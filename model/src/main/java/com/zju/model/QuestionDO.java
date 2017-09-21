@@ -15,11 +15,15 @@ import javax.persistence.*;
 @Table(name = "tk_question")
 public class QuestionDO extends BaseDomain {
 
-    @Id
+
+    /*@Id
     @GenericGenerator(name = "PKUUID", strategy = "uuid2")
     @GeneratedValue(generator = "PKUUID")
-    @Column(length = 36)
-    private String id;
+    @Column(length = 36)*/
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
     private Integer textbook;
 
@@ -32,11 +36,16 @@ public class QuestionDO extends BaseDomain {
     //题型：选择题-1，填空题-2，计算题-3
     private Integer type;
 
-    public String getId() {
+    @Column(name = "judge_answer" )
+    private String judgeAnswer;
+
+    private Integer typeid;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -78,5 +87,21 @@ public class QuestionDO extends BaseDomain {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getJudgeAnswer() {
+        return judgeAnswer;
+    }
+
+    public void setJudgeAnswer(String judgeAnswer) {
+        this.judgeAnswer = judgeAnswer;
+    }
+
+    public Integer getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(Integer typeid) {
+        this.typeid = typeid;
     }
 }

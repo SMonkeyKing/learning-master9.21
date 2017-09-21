@@ -23,12 +23,14 @@ public class CourseWareService {
     CourseWareRepos courseWareRepos;
 
     //后台查询课件列表
-    public Page<CourseWareDO> findAll(CourseWareDO courseWareDO, Pageable pageable) {
+    public Page<CourseWareDO> findAll(Integer id,CourseWareDO courseWareDO, Pageable pageable) {
         Specification querySpecification = (Specification<CourseWareDO>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            //predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
+            predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
             //名称
             //查询
+            //Integer idInt = Integer.parseInt(id);
+            predicates.add(criteriaBuilder.equal(root.get("typeid").as(Integer.class),id));
             if (!Lang.isEmpty(courseWareDO.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("name"), String.format("%%%s%%", courseWareDO.getName()
                         .trim()
@@ -41,7 +43,17 @@ public class CourseWareService {
     }
 
 
-    public CourseWareDO findOne(String id) {
+    public List<CourseWareDO> findLpList(Integer id)
+    {
+        Specification querySpecification = (Specification<CourseWareDO>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
+            predicates.add(criteriaBuilder.equal(root.get("typeid").as(Integer.class),id));
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        return courseWareRepos.findAll(querySpecification);
+    }
+    public CourseWareDO findOne(Integer id) {
         return courseWareRepos.findOne(id);
     }
 

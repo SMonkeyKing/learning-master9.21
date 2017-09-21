@@ -26,6 +26,8 @@ public class LeftMenuDO {
 
     private String url;
 
+    private Integer role;
+
     @Transient
     private List<LeftMenuDO> submenus = new ArrayList<LeftMenuDO>();
 
@@ -80,5 +82,13 @@ public class LeftMenuDO {
     public boolean hasSubmenus()
     {
         return this.getSubmenus().size() == 0;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }
