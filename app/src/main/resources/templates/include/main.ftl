@@ -6,8 +6,8 @@
                     <li tabid="main" class="main"><a href="javascript:"><span><span class="home_icon">我的主页</span></span></a></li>
                 </ul>
             </div>
-            <div class="tabsLeft" style="width: 25%">left</div><!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
-            <div class="tabsRight" style="width: 75%">right</div><!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+            <#--<div class="tabsLeft" style="width: 25%">left</div><!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" &ndash;&gt;-->
+            <#--<div class="tabsRight" style="width: 75%">right</div><!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" &ndash;&gt;-->
             <div class="tabsMore">more</div>
         </div>
         <ul class="tabsMoreList">

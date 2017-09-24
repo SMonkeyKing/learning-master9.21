@@ -1,0 +1,23 @@
+# Created by .ignore support plugin
+
+*.class
+*.log
+log
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+.idea/
+out/
+bin/
+tmp/
+*.tmp
+*.bak
+.settings/
+.project
+.classpath
+.target
+target/
+*.iml

@@ -27,7 +27,7 @@
                         <#list level2menus as level2>
                         <ul>
                             <li>
-                                <a <#if level2.getUrl()??>href="${ctx}${level2.getUrl()!}" </#if> target="navTab" rel="${level2.getTitle()!}">${level2.getTitle()}</a>
+                                <a <#if level2.getUrl()??>href="${ctx}${level2.getUrl()!}" target="navTab" rel="${level2.getTitle()!}" </#if> >${level2.getTitle()}</a>
                                 <#if !level2.hasSubmenus()>
                                     <ul>
                                     <#assign level3menus = level2.getSubmenus()/>
