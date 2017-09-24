@@ -6800,3 +6800,22 @@ typeid8_6_, courseware0_.upload_name as upload_n9_6_, courseware0_.url as url10_
 courseware0_ where courseware0_.delete_flag=0 and courseware0_.typeid=35 order by courseware0_.last_updated 
 desc limit 20 
  {executed in 1 msec}
+2017-09-24 16:17:53.611  INFO 18524 --- [http-nio-8080-exec-4] jdbc.sqltiming                           : select leftmenudo0_.id as id1_7_, leftmenudo0_.level as level2_7_, leftmenudo0_.parentid as 
+parentid3_7_, leftmenudo0_.role as role4_7_, leftmenudo0_.title as title5_7_, leftmenudo0_.url 
+as url6_7_ from left_menu leftmenudo0_ where 1=1 
+ {executed in 1 msec}
+2017-09-24 16:17:53.626  INFO 18524 --- [http-nio-8080-exec-4] c.z.a.b.stjj.service.LeftMenuService     : leftmenulist.size()201
+2017-09-24 16:17:57.562  INFO 18524 --- [http-nio-8080-exec-8] jdbc.sqltiming                           : select courseware0_.id as id1_6_, courseware0_.date_created as date_cre2_6_, courseware0_.delete_date 
+as delete_d3_6_, courseware0_.delete_flag as delete_f4_6_, courseware0_.last_updated as last_upd5_6_, 
+courseware0_.version as version6_6_, courseware0_.name as name7_6_, courseware0_.typeid as 
+typeid8_6_, courseware0_.upload_name as upload_n9_6_, courseware0_.url as url10_6_ from jxkj_course_ware 
+courseware0_ where courseware0_.delete_flag=0 and courseware0_.typeid=28 order by courseware0_.last_updated 
+desc limit 20 
+ {executed in 1 msec}
+2017-09-24 16:17:59.230  INFO 18524 --- [http-nio-8080-exec-9] jdbc.sqltiming                           : select courseware0_.id as id1_6_, courseware0_.date_created as date_cre2_6_, courseware0_.delete_date 
+as delete_d3_6_, courseware0_.delete_flag as delete_f4_6_, courseware0_.last_updated as last_upd5_6_, 
+courseware0_.version as version6_6_, courseware0_.name as name7_6_, courseware0_.typeid as 
+typeid8_6_, courseware0_.upload_name as upload_n9_6_, courseware0_.url as url10_6_ from jxkj_course_ware 
+courseware0_ where courseware0_.delete_flag=0 and courseware0_.typeid=29 order by courseware0_.last_updated 
+desc limit 20 
+ {executed in 0 msec}
