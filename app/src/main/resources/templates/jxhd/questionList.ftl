@@ -88,7 +88,7 @@
                     </div>
                     <div class="panelBar">
                         <ul class="toolBar">
-                            <li style="float: left"><a class="edit" href="${ctx}/question/prepareUpdate?id=${jxhdQuestionDO.getId()}" target="navTab" ><span>编辑</span></a></li>
+                            <li style="float: left"><a class="edit" href="${ctx}/jxhd/question/prepareUpdate?id=${jxhdQuestionDO.getId()}" target="navTab" ><span>修改</span></a></li>
                             <#if jxhdQuestionDO.version == 1>
                                 <li style="float: right"><a class="add" style="color: red" name="push${jxhdQuestionDO.getId()}" href="javascript:void(0)"  onclick="pushQuestion(${jxhdQuestionDO.getId()});" ><span>推送</span></a></li>
                             <#else >

@@ -10,6 +10,12 @@
                         <input type="text" style="width: 600px" name="name" class="required" value="${courseWare.name!}"/>
                     </dd>
                 </dl>
+                <dl class="nowrap">
+                    <dt>上传者：</dt>
+                    <dd>
+                        <input type="text" style="width: 600px" name="uploadName" class="required" value="${courseWare.uploadName!}"/>
+                    </dd>
+                </dl>
             </fieldset>
         </div>
         <div class="formBar">

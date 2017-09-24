@@ -1,9 +1,9 @@
 <script>
-    function doAdd()
+    /*function doAdd()
     {
         $("#content").val(editor1.txt.html());
         $("#answer").val(editor2.txt.html());
-    }
+    }*/
 </script>
 <div class="pageContent">
     <form method="post" enctype="multipart/form-data" action="${ctx}/question/update" class="pageForm required-validate" onsubmit="return iframeCallback(this, navTabAjaxDone);" >
@@ -75,7 +75,6 @@
             var url = result.url;
             insertImg(url);
         }
-
     }
 
     //alert(${questionDO.content!});
@@ -91,7 +90,6 @@
             var url = result.url;
             insertImg(url);
         }
-
     }
 
 </script>

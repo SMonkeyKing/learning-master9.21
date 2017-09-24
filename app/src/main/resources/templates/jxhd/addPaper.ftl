@@ -1,5 +1,5 @@
 <div class="pageContent">
-    <form method="post" enctype="multipart/form-data" action="${ctx}/jxhd/paper/save" class="pageForm required-validate" onsubmit="return iframeCallback(this, navTabAjaxDone);" >
+<form method="post" enctype="multipart/form-data" action="${ctx}/jxhd/paper/save" class="pageForm required-validate" onsubmit="return iframeCallback(this, navTabAjaxDone);" >
         <div class="pageFormContent" layoutH="60">
             <fieldset>
                 <legend>添加试卷</legend>

@@ -138,9 +138,11 @@ public class CourseWareController {
 
     @RequestMapping(value = {"/update"}, method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResponseVo update(CourseWareDO courseWare,@RequestParam(name="typeid")Integer id) {
-        LeftMenuDO leftMenuDO = leftMenuService.findOne(id);
+    public AjaxResponseVo update(CourseWareDO courseWare) {
+        LeftMenuDO leftMenuDO = leftMenuService.findOne(courseWare.getTypeid());
         String typeName = leftMenuDO.getTitle();
+        logger.info("typeName:"+typeName);
+        //logger.info("1233333333333333");
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
                 "操作成功", typeName, AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
         try {

@@ -49,14 +49,15 @@ public class JxhdQuestionController {
     JxhdPushQuestionService jxhdPushQuestionService;
 
 
-    @ModelAttribute
+    /*@ModelAttribute
     public void model(@RequestParam(name = "id", required = false) Integer id, Map<String, Object> model) {
         if (!Lang.isEmpty(id)) {
             JxhdTeacherQuestionDO jxhdQuestionDO = jxhdTeacherQuestionService.findOne(id);
             //如果有id存在，首先查出数据库中的对象，避免表单中未出现的空属性覆盖掉原有的值
             model.put("jxhdQuestionDO", jxhdQuestionDO);
         }
-    }
+    }*/
+
     @RequestMapping(value = {"/question/config"})
     public String questionList(JxhdTeacherQuestionDO jxhdTeacherQuestionDO, DwzPageVo page, Map model,HttpServletRequest request) {
         Integer type = 0;
@@ -151,12 +152,87 @@ public class JxhdQuestionController {
         //model.put("typeid",id);
         return "/jxhd/addTeacherQuestion";
     }
+
+    //试卷修改的功能没写
     @RequestMapping(value = {"/paper/prepareUpdate"})
     public String prepareUpdate(JxhdQuestionDO jxhdQuestionDO, Map model) {
         model.put("jxhdQuestionDO", jxhdQuestionDO);
-        return "/jxhd/update";
+        return "/jxhd/updatePaper";
     }
 
+    /*@RequestMapping(value = {"/question/prepareUpdate"})
+    public String prepareUpdateQuestion(JxhdQuestionDO jxhdQuestionDO, Map model) {
+        model.put("jxhdQuestionDO", jxhdQuestionDO);
+        return "/jxhd/question/updateTeacherQuestion";
+    }*/
+
+
+    @RequestMapping(value = {"/question/prepareUpdate"})
+    public String prepareUpdateQuestion(@RequestParam(name = "id")Integer id, Map model) {
+
+        if (!Lang.isEmpty(id)) {
+            JxhdTeacherQuestionDO jxhdQuestionDO = jxhdTeacherQuestionService.findOne(id);
+            model.put("jxhdQuestionDO", jxhdQuestionDO);
+        }
+        return "/jxhd/updateTeacherQuestion";
+    }
+
+    //修改教学互动中的试题
+    /*@RequestMapping(value = {"/question/update"}, method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResponseVo updateQuestion(JxhdTeacherQuestionDO jxhdQuestionDO)
+    {
+        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
+                "操作成功", "编辑", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+        try {
+            jxhdTeacherQuestionService.save(jxhdQuestionDO);
+        } catch (Exception e) {
+            ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
+            ajaxResponseVo.setMessage("操作失败!");
+            ajaxResponseVo.setCallbackType(null);
+            logger.error(e.getMessage(), e);
+        }
+        return ajaxResponseVo;
+    }*/
+
+    @RequestMapping(value = {"/question/update"},method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResponseVo questionUpdate(HttpServletRequest request)
+    {
+        //题目id
+        String id = request.getParameter("qid");
+        String topic = request.getParameter("topic");
+        logger.info(topic);
+        String type = request.getParameter("type");
+        //试题解析
+        String parsing = request.getParameter("parsing");
+        //选择题正确答案
+        String correctAnswer = request.getParameter("correctAnswer");
+        String answerA = request.getParameter("answerA");
+        String answerB = request.getParameter("answerB");
+        String answerC = request.getParameter("answerC");
+        String answerD = request.getParameter("answerD");
+        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS, "操作成功", "上传题目", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+        try{
+
+            JxhdTeacherQuestionDO jxhdTeacherQuestionDO =jxhdTeacherQuestionService.findOne(Integer.parseInt(id));
+            jxhdTeacherQuestionDO.setAnswerA(answerA);
+            jxhdTeacherQuestionDO.setAnswerB(answerB);
+            jxhdTeacherQuestionDO.setAnswerC(answerC);
+            jxhdTeacherQuestionDO.setAnswerD(answerD);
+            jxhdTeacherQuestionDO.setType(1);
+            jxhdTeacherQuestionDO.setTopic(topic);
+            jxhdTeacherQuestionDO.setCorrectAnswer(correctAnswer);
+            jxhdTeacherQuestionDO.setParsing(parsing);
+            jxhdTeacherQuestionService.save(jxhdTeacherQuestionDO);
+        }catch (Exception e) {
+            ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
+            ajaxResponseVo.setMessage("操作失败!");
+            ajaxResponseVo.setCallbackType(null);
+            logger.error(e.getMessage(), e);
+        }
+        return ajaxResponseVo;
+    }
     @RequestMapping(value = "uploadImg",method = RequestMethod.POST)
     @ResponseBody
     public JSON upload(@RequestParam(name = "myimgfile")MultipartFile multipartFile, HttpServletRequest request) throws IOException {

@@ -35,7 +35,6 @@ public class IndexController {
     @RequestMapping(value = {"", "index.htm", "index.html"}, method = RequestMethod.GET)
     public String mainIndex()
     {
-
         return "main";
     }
 
