@@ -40,7 +40,7 @@
                                         <#assign level4menus = level3.getSubmenus()/>
                                         <#list level4menus as level4>
                                             <#--<li><a href="${ctx}/courseWare/config" target="navTab" rel="${level4.getTitle()}">${level4.getTitle()}</a></li>-->
-                                            <li><a href="<#if level4.getUrl()??>${ctx}${level4.getUrl()!}</#if>?typeid=${level4.getId()!}" target="navTab" rel="${level4.getTitle()!}">${level4.getTitle()}</a></li>
+                                            <li><a href="<#if level4.getUrl()??>${ctx}${level4.getUrl()!}</#if>?<#if level4.paramsid??>typeid=${level4.getParamsid()!}<#else >typeid=${level4.getId()!}</#if>" target="navTab" rel="${level4.getTitle()!}">${level4.getTitle()}</a></li>
                                         </#list>
                                         </ul>
                                        </li>

@@ -28,6 +28,10 @@ public class TbxaQuestionStudentAnsDO {
     @Column(name = "question_content")
     private String questionContent;
 
+    //题目类型
+    @Column(name = "question_type")
+    private Integer questionType;
+
     public Integer getId() {
         return id;
     }
@@ -74,5 +78,13 @@ public class TbxaQuestionStudentAnsDO {
 
     public void setQuestionContent(String questionContent) {
         this.questionContent = questionContent;
+    }
+
+    public Integer getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(Integer questionType) {
+        this.questionType = questionType;
     }
 }

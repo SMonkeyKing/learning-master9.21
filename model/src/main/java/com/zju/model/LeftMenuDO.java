@@ -28,6 +28,8 @@ public class LeftMenuDO {
 
     private Integer role;
 
+    private Integer paramsid;
+
     @Transient
     private List<LeftMenuDO> submenus = new ArrayList<LeftMenuDO>();
 
@@ -90,5 +92,13 @@ public class LeftMenuDO {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+
+    public Integer getParamsid() {
+        return paramsid;
+    }
+
+    public void setParamsid(Integer paramsid) {
+        this.paramsid = paramsid;
     }
 }

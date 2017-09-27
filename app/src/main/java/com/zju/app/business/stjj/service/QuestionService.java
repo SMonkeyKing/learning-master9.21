@@ -63,6 +63,7 @@ public class QuestionService {
         return questionRepos.findAll(querySpecification, pageable);
     }
 
+
     //type=0表示查询所有的题目
     //返回List<>
     public List<QuestionDO> findAllList(Integer type,QuestionDO questionDO)
@@ -115,4 +116,6 @@ public class QuestionService {
     {
         return  questionRepos.findOne(id);
     }
+
+
 }

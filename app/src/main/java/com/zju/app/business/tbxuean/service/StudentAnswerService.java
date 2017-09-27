@@ -109,8 +109,10 @@ public class StudentAnswerService {
         tbxaQuestionStudentAnsDO.setQuestionContent(questionDO.getContent());
         tbxaQuestionStudentAnsDO.setCorrectAnswer(questionDO.getAnswer());
         tbxaQuestionStudentAnsDO.setAnswer(temp);
+        tbxaQuestionStudentAnsDO.setQuestionType(questionDO.getType());
         tbxaQuestionStudentAnsRepos.save(tbxaQuestionStudentAnsDO);
     }
+
     //保存学生选择题答案，无返回值~
     public void save(String temp)
     {
@@ -119,9 +121,11 @@ public class StudentAnswerService {
         tbxaQuestionStudentAnsDO.setAnswer(temp.substring(0,1));
         tbxaQuestionStudentAnsDO.setCorrectAnswer(temp.substring(1,2));
         Integer questionId = Integer.parseInt(temp.substring(2,temp.length()));
+        logger.info("questionId1111111111111"+questionId);
         tbxaQuestionStudentAnsDO.setQuestionId(questionId);
         QuestionDO questionDO = questionRepos.getOne(questionId);
         tbxaQuestionStudentAnsDO.setQuestionContent(questionDO.getContent());
+        tbxaQuestionStudentAnsDO.setQuestionType(questionDO.getType());
         if(temp.substring(0,1).equals(temp.substring(1,2)))
         {
             tbxaQuestionStudentAnsDO.setCorrect(1);

@@ -41,6 +41,18 @@ public class QuestionDO extends BaseDomain {
 
     private Integer typeid;
 
+    //答题人数
+    @Column(name = "ans_num" )
+    private Integer ansNum;
+
+    //正确人数
+    @Column(name = "correct_num" )
+    private Integer correctNum;
+
+    //正确率
+    @Column(name = "correct_rate" )
+    private double correctRate;
+
     public Integer getId() {
         return id;
     }
@@ -103,5 +115,29 @@ public class QuestionDO extends BaseDomain {
 
     public void setTypeid(Integer typeid) {
         this.typeid = typeid;
+    }
+
+    public Integer getAnsNum() {
+        return ansNum;
+    }
+
+    public void setAnsNum(Integer ansNum) {
+        this.ansNum = ansNum;
+    }
+
+    public double getCorrectRate() {
+        return correctRate;
+    }
+
+    public void setCorrectRate(double correctRate) {
+        this.correctRate = correctRate;
+    }
+
+    public Integer getCorrectNum() {
+        return correctNum;
+    }
+
+    public void setCorrectNum(Integer correctNum) {
+        this.correctNum = correctNum;
     }
 }

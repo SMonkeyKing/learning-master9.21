@@ -23,6 +23,7 @@
             insertImg(url);
         }
 
+
     }
     // 隐藏“网络图片”tab
     //editor2.customConfig.showLinkImg = false;
@@ -120,8 +121,8 @@
                         <#--<div>
                             <textarea id="answer" class="editor" style="width:650px;height:500px;"></textarea>
                         </div>-->
-                        <input  type="hidden" id="answer" name="answer" style="width: 800px;height: 500px;"/>
-                        <div id="editor2" name="editorAnswer">
+                        <input  type="hidden" id="answer" name="answer" />
+                        <div id="editor2" name="editorAnswer" style="width: 800px;height: 500px;">
 
                         </div>
                             <#--<div >

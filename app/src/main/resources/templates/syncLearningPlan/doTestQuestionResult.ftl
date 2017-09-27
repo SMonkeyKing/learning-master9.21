@@ -30,7 +30,7 @@
 
 </form>
 
-<div class="pageHeader">
+<#--<div class="pageHeader">
     <form id="questionForm" onsubmit="return navTabSearch(this);" action="${ctx}/syncTest/question/config" class="required-validate" method="post">
         <div class="searchBar">
 
@@ -47,38 +47,99 @@
             </table>
         </div>
     </form>
-</div>
+</div>-->
 <div class="pageContent">
     <form id="xztAnswerForm">
-        <div class="accordionContent" layoutH="67">
+        <div class="accordionContent" layoutH="5">
+        <#if syncTestFromTKDOS??&&syncTestFromTKDOS?size gt 0>
+            <#list syncTestFromTKDOS as syncTestFromTKDO>
+                <div class="panelContent" >
+                    <div id="content">
+                    ${syncTestFromTKDO.questionContent!}
+                    </div>
+                </div>
+                <#--<#if syncTestFromTKDO.questionType == 1>
+                    <div class="panelBar">
+                        <ul class="toolBar">
+                            <li style="float: right">
+                                <label style="font-weight:blod;">你的答案：</label>
+                                <label>${syncTestFromTKDO.stuAns!}</label>
+                                <#if tbxaQuestionStudentAnsDO.correct gt 0>
+                                    <label>正确</label>
+                                <#else>
+                                    <label style="color: red">错误</label>
+                                    <label style="font-weight:blod;color: red">正确答案：${tbxaQuestionStudentAnsDO.correctAnswer!}</label>
+                                </#if>
+                            </li>
 
+                        </ul>
+                    </div>
+                <#else >-->
+                    <div class="panelContent">
+                        <div>
+                            <br/>
+                            <label style="font-weight:blod;">你的答案：</label>
+                                ${syncTestFromTKDO.stuAns!}
+                            <br/>
+                            <br/>
+                        </div>
+                        <div>
+                            <label style="font-weight:blod;">参考答案：</label>
+                            ${syncTestFromTKDO.questionAnswer!}
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                <#--</#if>-->
+
+            </#list>
+
+
+        </#if>
         <#--<div class="pageFormContent" layoutH="138">-->
-            <#if tbxaQuestionStudentAnsDOs??&&tbxaQuestionStudentAnsDOs?size gt 0>
+            <#--<#if tbxaQuestionStudentAnsDOs??&&tbxaQuestionStudentAnsDOs?size gt 0>
                 <#list tbxaQuestionStudentAnsDOs as tbxaQuestionStudentAnsDO>
                     <div class="panelContent" >
                         <div id="content">
                             ${tbxaQuestionStudentAnsDO.questionContent!}
                         </div>
                     </div>
-                    <div class="panelBar">
-                        <ul class="toolBar">
-                            <li style="float: right">
-                                <label>你的答案：</label>
-                                <label>${tbxaQuestionStudentAnsDO.answer!}</label>
-                                <#if tbxaQuestionStudentAnsDO.correct gt 0>
-                                    <label>正确</label>
-                                <#else>
-                                    <label style="color: red">错误</label>
-                                    <label style="color: red">正确答案：${tbxaQuestionStudentAnsDO.correctAnswer!}</label>
-                                </#if>
-                            </li>
+                    <#if tbxaQuestionStudentAnsDO.questionType == 1>
+                        <div class="panelBar">
+                            <ul class="toolBar">
+                                <li style="float: right">
+                                    <label style="font-weight:blod;">你的答案：</label>
+                                    <label>${tbxaQuestionStudentAnsDO.answer!}</label>
+                                    <#if tbxaQuestionStudentAnsDO.correct gt 0>
+                                        <label>正确</label>
+                                    <#else>
+                                        <label style="color: red">错误</label>
+                                        <label style="font-weight:blod;color: red">正确答案：${tbxaQuestionStudentAnsDO.correctAnswer!}</label>
+                                    </#if>
+                                </li>
 
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
+                    <#else >
+                        <div class="panelContent">
+                            <div>
+                                <br/>
+                                <label style="font-weight:blod;">你的答案：</label>
+                                ${tbxaQuestionStudentAnsDO.answer!}
+                                <br/>
+                                <br/>
+                            </div>
+                            <div>
+                                <label style="font-weight:blod;">参考答案：</label>
+                                ${tbxaQuestionStudentAnsDO.correctAnswer!}
+                            </div>
+                        </div>
+                    </#if>
+
                 </#list>
 
 
-            </#if>
+            </#if>-->
         </div>
     </form>
     <#--<div class="panelBar">

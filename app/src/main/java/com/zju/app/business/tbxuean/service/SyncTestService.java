@@ -1,8 +1,8 @@
 package com.zju.app.business.tbxuean.service;
 
 import com.zju.model.SyncTestDO;
+import com.zju.model.SyncTestFromTKDO;
 import com.zju.repository.SysnTestRepos;
-import com.zju.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +25,9 @@ public class SyncTestService {
     @Autowired
     SysnTestRepos sysnTestRepos;
 
-    public Page<SyncTestDO> findAll(List<Integer> lpIds,SyncTestDO syncTestDO, Pageable pageable)
+    public Page<SyncTestDO> findAll(List<Integer> lpIds, SyncTestDO syncTestDO, Pageable pageable)
     {
-        Specification querySpecification = (Specification<SyncTestDO>) (root, criteriaQuery, criteriaBuilder) -> {
+        Specification querySpecification = (Specification<SyncTestFromTKDO>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
 
@@ -38,11 +35,11 @@ public class SyncTestService {
 
             //名称
             //查询
-            if (!Lang.isEmpty(syncTestDO.getName())) {
+            /*if (!Lang.isEmpty(syncTestDO.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("name"), String.format("%%%s%%", syncTestDO.getName()
                         .trim()
                 )));
-            }
+            }*/
 
             /*CriteriaBuilder.In in = criteriaBuilder.in(root.get("lpId").as(Integer.class));
             for (Integer lpId : lpIds) {

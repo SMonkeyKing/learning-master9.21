@@ -1,6 +1,7 @@
 package com.zju.repository;
 
 import com.zju.model.SyncTestDO;
+import com.zju.model.SyncTestFromTKDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
