@@ -75,7 +75,7 @@ public class SyncTestController {
              ) {
             lpList.add(courseWare.getId());
         }
-        Page<SyncTestDO> pageLists = syncTestService.findAll(lpList,syncTestDO, page.getPageable());
+        Page<SyncTestDO> pageLists = syncTestService.findAll1(lpList,syncTestDO, page.getPageable());
         page.setTotalCount(pageLists.getTotalElements());
         model.put("syncTestDO", syncTestDO);
         model.put("page", page);
@@ -119,12 +119,20 @@ public class SyncTestController {
         model.put("listSize",questionDOList.size());
         return "/syncLearningPlan/doTestQuestion";
     }
-    /*@RequestMapping(value = {"/prepareAdd"})
+    @RequestMapping(value = {"/prepareAdd"})
     public String prepareAdd(@RequestParam(name = "typeid")String id,Map model)
     {
         model.put("typeid",id);
         return "/syncLearningPlan/addLearningPlan";
-    }*/
+    }
+
+
+    @RequestMapping(value = {"/add"})
+    public String prepareAddSchoolTest(@RequestParam(name = "typeid")String id,Map model)
+    {
+        model.put("typeid",id);
+        return "/syncLearningPlan/addSyncTest";
+    }
 
     //本来是提交后直接返回测试结果，因为要实现target="navTab",必须使用<a>,但总是提示无法提交、
     //目前是先点击提交答案按钮提交表单，再点击查看结果进行结果查询。
@@ -229,9 +237,9 @@ public class SyncTestController {
         questionDO.setAnsNum(ansSum);
         //正确率保留两位小数
         double f = (double)correctNum/ansSum;
-        BigDecimal b = new BigDecimal(f);
-        double rate = b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
-        questionDO.setCorrectRate(rate);
+        /*BigDecimal b = new BigDecimal(f);
+        double rate = b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();*/
+        questionDO.setCorrectRate(Lang.formattedDecimalToPercentage(f));
         questionService.save(questionDO);
 
     }
@@ -269,10 +277,10 @@ public class SyncTestController {
     {
 
         SyncTestDO syncTestDO = syncTestService.findOne(id);
-        Integer lpId = syncTestDO.getLpId();
+        Integer lpId = syncTestDO.getTypeid();
         CourseWareDO courseWareDO = courseWareService.findOne(lpId);
         String lpName = courseWareDO.getName();
-        String pdfUrl = syncTestDO.getUrl();
+        String pdfUrl = courseWareDO.getUrl();
         model.put("lpName",lpName);
         model.put("syncTestDO",syncTestDO);
         /*model.put("lpId",lpId);
@@ -285,9 +293,9 @@ public class SyncTestController {
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo save(@RequestParam(name = "file1") MultipartFile file1,@RequestParam(name = "file2") MultipartFile file2,
-                               @RequestParam(name = "xzt_answer")String answer,@RequestParam(name = "learningPlanId")Integer id) {
+                               @RequestParam(name = "xzt_answer")String answer,@RequestParam(name = "typeid")Integer id) {
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
-                "操作成功", "同步测试", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+                "操作成功", "高一试题", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
 
         try {
             SyncTestDO syncTestDO = new SyncTestDO();
@@ -303,12 +311,12 @@ public class SyncTestController {
                 FileCopyUtils.copy(file1.getBytes(), new File(newFileName1));
                 String url1 = "http://localhost/courseWare/" + oldname1;
                 syncTestDO.setUrl(url1);
-                syncTestDO.setLpId(id);
+                syncTestDO.setTypeid(id);
                 syncTestDO.setXztAnswer(answer);
             }
             //上传答案
             if(file2!=null) {
-                String oldname2 = file1.getOriginalFilename();
+                String oldname2 = file2.getOriginalFilename();
                 syncTestDO.setName(oldname2);
                 String suffixName = file2.getOriginalFilename().substring(file2.getOriginalFilename().lastIndexOf("."));
 

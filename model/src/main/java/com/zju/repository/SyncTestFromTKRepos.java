@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 /**
- * Created by lujie on 2017/8/19.
+ * Created by lujie on 2017/9/23.
  */
 public interface SyncTestFromTKRepos extends JpaRepository<SyncTestFromTKDO,Integer>,JpaSpecificationExecutor<SyncTestFromTKDO> {
 

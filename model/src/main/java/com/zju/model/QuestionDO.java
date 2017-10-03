@@ -51,7 +51,25 @@ public class QuestionDO extends BaseDomain {
 
     //正确率
     @Column(name = "correct_rate" )
-    private double correctRate;
+    private String correctRate;
+
+    //是否已加入单元测试
+    @Column(name = "unit_flag" )
+    private Integer unitFlag;
+
+
+    //是否已加入同步测试
+    @Column(name = "sync_flag" )
+    private Integer syncFlag;
+
+    /*//是否已加入单元测试
+    @Column(name = "unit_flag" )
+    private Boolean unitFlag = false;
+
+
+    //是否已加入同步测试
+    @Column(name = "sync_flag" )
+    private Boolean syncFlag = false;*/
 
     public Integer getId() {
         return id;
@@ -125,11 +143,11 @@ public class QuestionDO extends BaseDomain {
         this.ansNum = ansNum;
     }
 
-    public double getCorrectRate() {
+    public String getCorrectRate() {
         return correctRate;
     }
 
-    public void setCorrectRate(double correctRate) {
+    public void setCorrectRate(String correctRate) {
         this.correctRate = correctRate;
     }
 
@@ -140,4 +158,36 @@ public class QuestionDO extends BaseDomain {
     public void setCorrectNum(Integer correctNum) {
         this.correctNum = correctNum;
     }
+
+    public Integer getUnitFlag() {
+        return unitFlag;
+    }
+
+    public void setUnitFlag(Integer unitFlag) {
+        this.unitFlag = unitFlag;
+    }
+
+    public Integer getSyncFlag() {
+        return syncFlag;
+    }
+
+    public void setSyncFlag(Integer syncFlag) {
+        this.syncFlag = syncFlag;
+    }
+
+    /*public Boolean getUnitFlag() {
+        return unitFlag;
+    }
+
+    public void setUnitFlag(Boolean unitFlag) {
+        this.unitFlag = unitFlag;
+    }
+
+    public Boolean getSyncFlag() {
+        return syncFlag;
+    }
+
+    public void setSyncFlag(Boolean syncFlag) {
+        this.syncFlag = syncFlag;
+    }*/
 }

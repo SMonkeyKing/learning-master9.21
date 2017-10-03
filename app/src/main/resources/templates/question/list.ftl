@@ -22,7 +22,7 @@
     }
 </style>
 
-<form id="pagerForm" method="post" action="${ctx}/question/config">
+<form id="pagerForm" method="post" action="${ctx}/question/config?typeid=${typeid}">
     <input type="hidden" name="pageNum" value="${page.currentPage!}"/>
     <input type="hidden" name="numPerPage" value="${page.numPerPage!}"/>
     <input type="hidden" name="orderBy" value="desc">
@@ -128,7 +128,7 @@
             <li><a class="add" href="${ctx}/question/prepareAdd?typeid=${typeid}" target="navTab"><span>增加</span></a></li>
         </ul>
     </div>
-        <div class="accordionContent" layoutH="67">
+        <div class="accordionContent" layoutH="115">
 
         <#--<div class="pageFormContent" layoutH="138">-->
             <#if questionDOs??&&questionDOs?size gt 0>
@@ -142,9 +142,9 @@
                         <ul class="toolBar">
                             <li style="float: left"><a class="edit" href="${ctx}/question/prepareUpdate?id=${questionDO.getId()}" target="navTab" ><span>编辑</span></a></li>
                             <li style="float: right"><a class="add" href="javascript:void(0)" name="add${questionDO.getId()}"onclick="addToPaper(${questionDO.getId()});" ><span id="add">加入试卷</span></a></li>
-                            <#if questionDO.type == 1>
+                            <#if questionDO.type == 1 >
                                 <#--只有选择题显示正确率-->
-                                <li style="float: right"><span id="add" style="color: red">正确率：${questionDO.getCorrectRate()!}</span></li>
+                                <li style="float: right"><span id="add" style="color: red">正确率：<#if questionDO.correctRate??>${questionDO.getCorrectRate()!}<#else >0</#if></span></li>
                             </#if>
                         <#--<li style="float: right"><a class="add" href="${ctx}/paper/addCookies?questionId=${questionDO.getId()!}" ><span>加入试卷</span></a></li>-->
                         </ul>

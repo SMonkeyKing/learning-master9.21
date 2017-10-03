@@ -36,6 +36,7 @@ public class StudentAnswerController {
     {
         /*String xztAnswer = request.getAttribute("xztAnswer").toString();
         String tkjsAnswer = request.getAttribute("tkjsAnswer").toString();*/
+        //找最后一个学生做的
         TbxaStudentAnswerDO tbxaStudentAnswerDO = studentAnswerService.findLatest();
         Integer testId = tbxaStudentAnswerDO.getTestId();
         logger.info("tbxaStudentAnswerDO.getXzt_answer()"+tbxaStudentAnswerDO.getXzt_answer());

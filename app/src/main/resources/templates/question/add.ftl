@@ -94,7 +94,7 @@
                     <dt>题目描述：</dt>
                     <dd>
                         <input  type="hidden" id="question" name="question" />
-                        <div id="editor1" name="editorContent" style="width: 800px;height: 500px;">
+                        <div id="editor1" name="editorContent" style="width: 800px;">
 
                         </div>
                         <#--<div>
@@ -122,7 +122,7 @@
                             <textarea id="answer" class="editor" style="width:650px;height:500px;"></textarea>
                         </div>-->
                         <input  type="hidden" id="answer" name="answer" />
-                        <div id="editor2" name="editorAnswer" style="width: 800px;height: 500px;">
+                        <div id="editor2" name="editorAnswer" style="width: 800px;">
 
                         </div>
                             <#--<div >

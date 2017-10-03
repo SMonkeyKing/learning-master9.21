@@ -59,7 +59,7 @@ public class SyncTestFromTKController {
         {
             typeInt = Integer.parseInt(type);
         }
-        Page<QuestionDO> pageLists = questionService.findAll(183,typeInt,questionDO, page.getPageable());
+        Page<QuestionDO> pageLists = questionService.findAll(typeid,typeInt,questionDO, page.getPageable());
         page.setTotalCount(pageLists.getTotalElements());
         model.put("questionDO", questionDO);
         model.put("page", page);

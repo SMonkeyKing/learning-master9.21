@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 同步测试
  */
 @Entity
-@Table(name = "tbxa_sync_test")
+@Table(name = "school_test")
 public class SyncTestDO extends BaseDomain{
 
     @Id
@@ -21,8 +21,11 @@ public class SyncTestDO extends BaseDomain{
 
     private String url;
 
-    @Column(name = "lp_id" )
-    private Integer lpId;
+    @Column(name = "upload_name")
+    private String upload_name;
+
+    //@Column(name = "typeid" )
+    private Integer typeid;
 
     @Column(name = "answer_url")
     private String answerUrl;
@@ -54,14 +57,6 @@ public class SyncTestDO extends BaseDomain{
         this.url = url;
     }
 
-    public Integer getLpId() {
-        return lpId;
-    }
-
-    public void setLpId(Integer lpId) {
-        this.lpId = lpId;
-    }
-
     public String getAnswerUrl() {
         return answerUrl;
     }
@@ -76,5 +71,21 @@ public class SyncTestDO extends BaseDomain{
 
     public void setXztAnswer(String xztAnswer) {
         this.xztAnswer = xztAnswer;
+    }
+
+    public String getUpload_name() {
+        return upload_name;
+    }
+
+    public void setUpload_name(String upload_name) {
+        this.upload_name = upload_name;
+    }
+
+    public Integer getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(Integer typeid) {
+        this.typeid = typeid;
     }
 }

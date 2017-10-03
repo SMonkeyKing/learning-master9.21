@@ -23,7 +23,8 @@ import java.util.List;
 @Service
 @Transactional
 public class SyncTestFromTKService {
-    private static Logger logger = LoggerFactory.getLogger(SyncTestService.class);
+
+    private static Logger logger = LoggerFactory.getLogger(SyncTestFromTKService.class);
 
     @Autowired
     SyncTestFromTKRepos syncTestFromTKRepos;

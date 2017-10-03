@@ -39,6 +39,9 @@ public class JxhdTeacherQuestionDO extends BaseDomain{
     //试题解析
     private String parsing;
 
+    //题目内容存入一个文件， 文件地址
+    private String contentUrl;
+
     public Integer getId() {
         return id;
     }
@@ -117,5 +120,13 @@ public class JxhdTeacherQuestionDO extends BaseDomain{
 
     public void setParsing(String parsing) {
         this.parsing = parsing;
+    }
+
+    public String getContentUrl() {
+        return contentUrl;
+    }
+
+    public void setContentUrl(String contentUrl) {
+        this.contentUrl = contentUrl;
     }
 }

@@ -21,8 +21,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -127,6 +131,7 @@ public class QuestionController {
         Integer typeInt = Integer.parseInt(type);
         String answer = request.getParameter("answer");
         String judgeAnswer = request.getParameter("xztAnswer");
+
         logger.info(content);
         logger.info(answer);
         //AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS, "操作成功", "精选试题库", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);

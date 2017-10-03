@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -47,6 +48,15 @@ public class Lang {
 	 * 空数组
 	 */
 	public final static Object[] EMPTY_ARRAY = new Object[] {};
+
+	public static String formattedDecimalToPercentage(double decimal)
+	{
+		//获取格式化对象
+		NumberFormat nt = NumberFormat.getPercentInstance();
+		//设置百分数精确度2即保留两位小数
+		nt.setMinimumFractionDigits(2);
+		return nt.format(decimal);
+	}
 
 	/**
 	 * 获取对象系统引用哈希值（不为负数）

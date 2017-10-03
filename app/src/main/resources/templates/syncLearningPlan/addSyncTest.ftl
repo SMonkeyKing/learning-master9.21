@@ -6,7 +6,7 @@
                 <dl class="nowrap">
                     <dt>上传测试题目：</dt>
                     <dd>
-                        <input type="hidden" value="${learningPlanId}" name="learningPlanId"/>
+                        <input type="hidden" value="${typeid}" name="typeid"/>
                         <#--<input id="addFile" type="button" value="添加文件">-->
                         <div id="fileDiv">
                             <input type="file" name="file1" />

@@ -5,7 +5,7 @@ import com.zju.utils.jpa.BaseDomain;
 import javax.persistence.*;
 
 /**
- * Created by lujie on 2017/8/19.
+ * Created by lujie on 2017/9/21.
  * 同步学案——同步测试
  */
 @Entity

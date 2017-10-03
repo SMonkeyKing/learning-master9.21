@@ -34,13 +34,21 @@
                                     <#list level3menus as level3>
 
                                        <li>
-                                           <a <#if level3.getUrl()??>href="${ctx}${level3.getUrl()!}" target="navTab" rel="${level3.getTitle()!}"</#if>>${level3.getTitle()}</a>
+                                           <a <#if level3.getUrl()??>href="${ctx}${level3.getUrl()!}<#if level3.paramsid??>?typeid=${level3.getParamsid()!}</#if>" target="navTab" rel="${level3.getTitle()!}"</#if>>${level3.getTitle()}</a>
                                            <#--<a href="<#if level3.getUrl()??>${ctx}${level3.getUrl()}<#else >javascript:void(0)</#if>" target="navTab" rel="${level3.getTitle()}">${level3.getTitle()}</a>-->
                                         <ul>
                                         <#assign level4menus = level3.getSubmenus()/>
                                         <#list level4menus as level4>
-                                            <#--<li><a href="${ctx}/courseWare/config" target="navTab" rel="${level4.getTitle()}">${level4.getTitle()}</a></li>-->
-                                            <li><a href="<#if level4.getUrl()??>${ctx}${level4.getUrl()!}</#if>?<#if level4.paramsid??>typeid=${level4.getParamsid()!}<#else >typeid=${level4.getId()!}</#if>" target="navTab" rel="${level4.getTitle()!}">${level4.getTitle()}</a></li>
+                                            <li><a href="<#if level4.getUrl()??>${ctx}${level4.getUrl()!}</#if>?<#if level4.paramsid??>typeid=${level4.getParamsid()!}<#else >typeid=${level4.getId()!}</#if>" target="navTab" rel="${level4.getTitle()!}">${level4.getTitle()}</a>
+                                                <ul>
+                                                    <#assign level5menus = level4.getSubmenus()/>
+                                                    <#list level5menus as level5>
+                                                        <li><a href="<#if level5.getUrl()??>${ctx}${level5.getUrl()!}</#if>?<#if level5.paramsid??>typeid=${level5.getParamsid()!}<#else >typeid=${level5.getId()!}</#if>" target="navTab" rel="${level5.getTitle()!}">${level5.getTitle()}</a>
+
+                                                        </li>
+                                                    </#list>
+                                                </ul>
+                                            </li>
                                         </#list>
                                         </ul>
                                        </li>

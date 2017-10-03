@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -445,7 +449,7 @@ public class JxhdQuestionController {
     public AjaxResponseVo save(HttpServletRequest request)
     {
         String question = request.getParameter("question");
-        logger.info(question);
+        logger.info("question"+question);
         String type = request.getParameter("type");
         Integer typeInt = 1;
         if (!Lang.isEmpty(type))
@@ -456,6 +460,15 @@ public class JxhdQuestionController {
         String parsing = request.getParameter("answer");
         //选择题正确答案
         String correctAnswer = request.getParameter("correctAnswer");
+        //以当前时间为文件名
+        Date now=new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String fileName=dateFormat.format(now)+".html";
+        String filePathContent = "D:\\work\\question\\"+"content"+fileName;
+        String contentUrl = "http://localhost/question/"+"content"+fileName;
+
+       /* String filePathAnswer = "D:\\work\\question\\"+"answer"+fileName;
+        String contentAnswer = "http://localhost/question/"+"answer"+fileName;*/
         String answerA = request.getParameter("answerA");
         String answerB = request.getParameter("answerB");
         String answerC = request.getParameter("answerC");
@@ -470,6 +483,8 @@ public class JxhdQuestionController {
             jxhdTeacherQuestionDO.setType(typeInt);
             jxhdTeacherQuestionDO.setTopic(question);
             jxhdTeacherQuestionDO.setCorrectAnswer(correctAnswer);
+            WriteStringToFile(filePathContent,question);
+            jxhdTeacherQuestionDO.setContentUrl(contentUrl);
             jxhdTeacherQuestionDO.setParsing(parsing);
             jxhdTeacherQuestionService.save(jxhdTeacherQuestionDO);
         }catch (Exception e) {
@@ -479,6 +494,21 @@ public class JxhdQuestionController {
             logger.error(e.getMessage(), e);
         }
         return ajaxResponseVo;
+    }
+
+    //把题目的答案和解析以文件形式保存，为了传给手机，保证文本不出现乱码
+    public void WriteStringToFile(String filePath,String content) {
+        try{
+            File file = new File(filePath);
+            file.createNewFile();
+            FileWriter fw = new FileWriter(filePath, false);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+            fw.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //    @RequestMapping(value = {"/save"})

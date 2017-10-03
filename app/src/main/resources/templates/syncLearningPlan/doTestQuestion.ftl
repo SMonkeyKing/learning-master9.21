@@ -29,9 +29,9 @@
     <#--<input type="hidden" name="name" value="${syncTestFromTKDO.subject!}">-->
 </form>
 
-<div class="pageHeader">
+<#--<div class="pageHeader">
 
-    <#--<form id="questionForm" onsubmit="return navTabSearch(this);" action="${ctx}/syncTestFromTK/list" class="required-validate" method="post">
+    &lt;#&ndash;<form id="questionForm" onsubmit="return navTabSearch(this);" action="${ctx}/syncTestFromTK/list" class="required-validate" method="post">
         <div class="searchBar">
 
             <table class="searchContent">
@@ -46,17 +46,18 @@
                 </tr>
             </table>
         </div>
-    </form>-->
-    <div class="formBar">
-        <ul>
-            <li style="text-align: center"><div class="buttonActive"><div class="buttonContent"><button  onclick="submitAnswer()">提交答案</button></div></div></li>
-            <li><a class="buttonActive"  id = "gen" href="${ctx}/syncTest/backResult?typeid=${typeid}" target="navTab"><span>查看测试结果</span></a></li>
-        </ul>
-    </div>
-</div>
+    </form>&ndash;&gt;
+
+</div>-->
 <div class="pageContent">
-    <form id="xztAnswerForm" method="post" class="pageForm required-validate" onsubmit="return navTabSearch(this);">
-        <div class="accordionContent" layoutH="97">
+    <form id="xztAnswerForm" method="post" action="${ctx}/syncTest/submitAnswer" class="pageForm required-validate" onsubmit="return navTabSearch(this);">
+        <div class="formBar">
+            <ul>
+                <li style="text-align: center"><div class="buttonActive"><div class="buttonContent"><button type="submit">提交答案</button></div></div></li>
+                <li><a class="buttonActive"  id = "gen" href="${ctx}/syncTest/backResult?typeid=${typeid}" target="navTab"><span>查看测试结果</span></a></li>
+            </ul>
+        </div>
+        <div class="accordionContent" layoutH="47">
             <input type="hidden" name="typeid" value="${typeid!}">
             <#if syncTestFromTKDOs??&&syncTestFromTKDOs?size gt 0>
                 <#list syncTestFromTKDOs as syncTestFromTKDO>

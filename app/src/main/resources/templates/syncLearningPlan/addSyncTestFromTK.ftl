@@ -22,7 +22,7 @@
     }
 </style>
 
-<form id="pagerForm" method="post" action="${ctx}/syncTestFromTK/config">
+<form id="pagerForm" method="post" action="${ctx}/syncTestFromTK/config?typeid=${typeid}">
     <input type="hidden" name="pageNum" value="${page.currentPage!}"/>
     <input type="hidden" name="numPerPage" value="${page.numPerPage!}"/>
     <input type="hidden" name="orderBy" value="desc">
@@ -50,7 +50,7 @@
 </div>
 <div class="pageContent">
 
-    <div class="accordionContent" layoutH="67">
+    <div class="accordionContent" layoutH="60">
 
     <#--<div class="pageFormContent" layoutH="138">-->
     <#if questionDOs??&&questionDOs?size gt 0>

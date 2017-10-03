@@ -24,7 +24,11 @@
                 <dl class="nowrap">
                     <dt>题目描述：</dt>
                     <dd>
-                        <textarea id="question" name="question"  style="height: 200px;width: 800px;"></textarea>
+                        <input  type="hidden" id="question" name="question" />
+                            <div id="editor1" name="editorContent" style="width: 800px;">
+
+                        </div>
+                        <#--<textarea id="question" name="question"  style="height: 200px;width: 800px;"></textarea>-->
                             <#--<input type="text" id="question" name="question" style="height: 30px;width: 800px;">-->
                     </dd>
                 </dl>
@@ -62,7 +66,11 @@
                 <dl class="nowrap">
                     <dt>题目解析：</dt>
                     <dd>
-                        <textarea id="answer" name="answer" style="height: 200px;width: 800px;"></textarea>
+                        <input  type="hidden" id="answer" name="answer" />
+                        <div id="editor2" name="editorAnswer" style="width: 800px;">
+
+                        </div>
+                        <#--<textarea id="answer" name="answer" style="height: 200px;width: 800px;"></textarea>-->
                         <#--<input type="text" id="answer" name="answer" style="height: 30px;width: 800px;">-->
                     </dd>
                 </dl>
@@ -71,7 +79,7 @@
         </div>
         <div class="formBar">
             <ul>
-                <li><div class="buttonActive"><div class="buttonContent"><button type="submit" >保存</button></div></div></li>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit" onclick="doAdd()" >保存</button></div></div></li>
                 <li>
                     <div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
                 </li>

@@ -1,6 +1,6 @@
-<div class="pageHeader">
+<#--<div class="pageHeader">
     <span>学案名称：${lpName}</span>
-</div>
+</div>-->
 <div class="pageContent">
 
     <#--<div id="myPdf" style="float: left;">
