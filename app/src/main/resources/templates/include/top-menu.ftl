@@ -1,7 +1,7 @@
 <div id="header">
     <div class="headerNav">
         <div>
-            <span style="float: left;padding:15px 15px;font-size: 200%;color: white">学科资源信息平台<#if (role<2)>(教师专区)<#else>(学生专区)</#if></span>
+            <span style="float: left;padding:15px 15px;font-size: 200%;color: white">学科资源信息平台<#if (role=='1')>(教师专区)<#else>(学生专区)</#if></span>
         </div>
         <#--<div>
             <a href="${c_static}/channel-admin" role="button" style="float: left;padding:15px 15px;" target="_blank">

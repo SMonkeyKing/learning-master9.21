@@ -1,10 +1,12 @@
 package com.zju.app.web;
 
 import com.zju.app.business.stjj.service.LeftMenuService;
+import com.zju.app.constant.Constants;
 import com.zju.model.LeftMenuDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,18 +35,17 @@ public class IndexController {
     LeftMenuService leftMenuService;
 
     @RequestMapping(value = {"", "index.htm", "index.html"}, method = RequestMethod.GET)
-    public String mainIndex()
-    {
+    public String mainIndex() {
         return "main";
     }
 
     @RequestMapping(value = {"/index"})
-    public ModelAndView index(@RequestParam(name="role")Integer roleId, HttpServletRequest request) throws UnknownHostException {
-        ModelAndView mv = new ModelAndView("index");
+    public ModelAndView index(@RequestParam(name = "role") String roleId, HttpServletRequest request) throws UnknownHostException {
+        ModelAndView mv = new ModelAndView("allIndex");
         List<LeftMenuDO> leftmenu = leftMenuService.findAll(roleId);
 
         //把role存在session中
-        request.getSession().setAttribute("role",roleId);
+        request.getSession().setAttribute(Constants.ROLE_KEY, roleId);
         /*for (LeftMenuDO menu:leftmenu
                 ) {
             logger.info(menu.getTitle());
@@ -62,22 +63,21 @@ public class IndexController {
             }
 
         }*/
-        mv.addObject("leftmenu",leftmenu);
-        mv.addObject("role",roleId);
+        mv.addObject("leftmenu", leftmenu);
+        mv.addObject("role", roleId);
         //String loginIp = request.getRemoteAddr();
         //String ip = request.getRemoteHost();
 
         //mv.addObject("ip",loginIp);
         String ip1 = InetAddress.getLocalHost().getHostAddress().toString();
-        mv.addObject("ip",ip1);
+        mv.addObject("ip", ip1);
         return mv;
     }
 
     //教师专区需要登录
     //学生专区不用登录
     @RequestMapping(value = {"/loginIndex"})
-    public String login()
-    {
+    public String login() {
         return "loginIndex";
     }
 

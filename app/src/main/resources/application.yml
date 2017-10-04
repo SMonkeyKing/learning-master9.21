@@ -34,10 +34,8 @@ context:
   ctx: /learning
   commonstatic:
 
-security:
-  user:
-    name: management
-    password: password
-  headers:
-    frame: false
-
+login:
+  username: admin
+  password: admin
+  excludes: /,/loginIndex
+  loginInEntry: /learning/
