@@ -40,7 +40,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = {"/index"})
-    public ModelAndView index(@RequestParam(name = "role") String roleId, HttpServletRequest request) throws UnknownHostException {
+    public ModelAndView index(@RequestParam(name = "role") Integer roleId, HttpServletRequest request) throws UnknownHostException {
         ModelAndView mv = new ModelAndView("allIndex");
         List<LeftMenuDO> leftmenu = leftMenuService.findAll(roleId);
 

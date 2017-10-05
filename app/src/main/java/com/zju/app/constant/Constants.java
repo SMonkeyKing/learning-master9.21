@@ -5,11 +5,11 @@ package com.zju.app.constant;
  */
 public class Constants {
 
-    public static final String ROLE_KEY = "role_id";
+    public static final String ROLE_KEY = "role";
 
     public static class Role{
-        public static final String teacher = "1";
-        public static final String student = "2";
+        public static final Integer teacher = 1;
+        public static final Integer student = 2;
     }
 
 }

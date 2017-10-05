@@ -30,7 +30,7 @@ public class LeftMenuService {
     @Autowired
     LeftMenuRepos leftMenuRepos;
 
-    public List<LeftMenuDO> findAll(String roleId) {
+    public List<LeftMenuDO> findAll(Integer roleId) {
         Specification querySpecification = (Specification<LeftMenuDO>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             //教师包含了两种列表

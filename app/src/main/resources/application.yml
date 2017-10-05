@@ -37,5 +37,5 @@ context:
 login:
   username: admin
   password: admin
-  excludes: /,/loginIndex
+  excludes: /,/index,/loginIndex,/error/**
   loginInEntry: /learning/
