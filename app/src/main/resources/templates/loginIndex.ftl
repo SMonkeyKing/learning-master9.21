@@ -15,7 +15,7 @@
     <h1><strong>教师专区</strong></h1>
     <form method="link" action="${ctx}/index">
         <input type="text" value="admin" />
-        <input type="password" value="123456"/>
+        <input type="password" value="admin"/>
         <input type="hidden" name="role" value="1"/>
         <button class="blue">Login</button>
         <#--<a href="${ctx}/index"><button class="blue">Login</button></a>-->
