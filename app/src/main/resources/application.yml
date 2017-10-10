@@ -39,3 +39,28 @@ login:
   password: admin
   excludes: /,/index,/loginIndex,/error/**
   loginInEntry: /learning/
+
+
+quartz.enabled: true
+
+jobs:
+  joblist[0]:
+    jobName: DemoJob
+    runFlag: true
+    concurrent: false
+    #10s执行一次
+    triggerCronExpression: 0/10 * * * * ?
+    jobClass: com.zju.app.job.DemoJob
+    jobClassRunMethod: run
+    singleFlag: true
+    singleJobTime: 60000000
+  joblist[1]:
+    jobName: DemoJob
+    runFlag: false
+    concurrent: false
+    #10s执行一次
+    triggerCronExpression: 0/30 * * * * ?
+    jobClass: com.zju.app.job.DemoJob
+    jobClassRunMethod: run
+    singleFlag: true
+    singleJobTime: 60000000
