@@ -2,7 +2,7 @@
 
 *.class
 *.log
-log
+log/
 *.jar
 *.war
 *.ear
