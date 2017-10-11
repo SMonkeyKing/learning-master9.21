@@ -96,6 +96,43 @@ public class JxhdQuestionController {
         return "/jxhd/paperList";
     }
 
+    //用于获取填空选择题学生作答情况的列表
+    //学生上传的是图片
+    @RequestMapping(value = {"/img/config"})
+    public String stuAnsImgList(Map model)
+    {
+        List<CompositeQuestionAnswerDO> compositeQuestionAnswerDOS = jxhdStudentAnswerService.getCompositeQuestionAnswer();
+        model.put("compositeQuestionAnswerDOS",compositeQuestionAnswerDOS);
+        return "/jxhd/totalCompositeAnswerList";
+    }
+
+    /*@RequestMapping(value = {"/img/getCompositeAnswer"})
+    @ResponseBody
+    public OneResult getCompositeAnswer(@RequestParam(name = "paperId")Integer paperid)
+    {
+        List<JxhdStudentAnswerDO> jxhdStudentAnswerDOS = jxhdStudentAnswerService.findAllList(paperid);
+        OneResult oneResult = new OneResult();
+        oneResult.setStuAns(jxhdStudentAnswerDOS);
+        return oneResult;
+    }*/
+
+    @RequestMapping(value = {"/img/studentAnsInOneQuestion"})
+    public String getStudentCompositeAnsInOneQuestion(@RequestParam(name = "paperid")Integer paperid,JxhdStudentAnswerDO jxhdStudentAnswerDO,DwzPageVo page,Map model)
+    {
+        Page<JxhdStudentAnswerDO> pageLists = jxhdStudentAnswerService.findAll(paperid,jxhdStudentAnswerDO, page.getPageable());
+        page.setTotalCount(pageLists.getTotalElements());
+        //List<JxhdStudentAnswerDO> jxhdStudentAnswerDOS = jxhdStudentAnswerService.findAllList(paperid);
+        //OneResult oneResult = new OneResult();
+        //oneResult.setStuAns(jxhdStudentAnswerDOS);
+        //model.put("result",oneResult);
+        //model.put("jxhdStudentAnswerDO", jxhdStudentAnswerDO);
+        model.put("page", page);
+        model.put("count",page.getTotalCount());
+        model.put("paperId",paperid);
+        model.put("jxhdStudentAnswerDOs", pageLists.getContent());
+        return "/jxhd/stuAnsImgList2";
+    }
+
     /*@RequestMapping(value = {"/studentAns"})
     public String studentAnswerList(JxhdStudentAnswerDO jxhdStudentAnswerDO,DwzPageVo page, Map model)
     {
