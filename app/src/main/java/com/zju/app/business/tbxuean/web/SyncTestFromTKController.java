@@ -49,9 +49,10 @@ public class SyncTestFromTKController {
     }
     //通过点击左侧菜单进入添加同步测试题列表
     @RequestMapping(value = {"/config"})
-    public String addSyncTestFromTK(@RequestParam(name = "typeid") Integer typeid, HttpServletRequest request,
+    public String addSyncTestFromTK(@RequestParam(name = "id") Integer id, HttpServletRequest request,
                                     QuestionDO questionDO, DwzPageVo page, Map model)
     {
+        Integer typeid = Integer.parseInt(request.getParameter("typeid"));
         String type = request.getParameter("type");
         logger.info("type:"+type);
         Integer typeInt = 0;
@@ -66,15 +67,18 @@ public class SyncTestFromTKController {
         model.put("questionDOs", pageLists.getContent());
         model.put("type", typeInt);
         model.put("typeid", typeid);
+        model.put("learningPlanId",id);
         return "syncLearningPlan/addSyncTestFromTK";
     }
 
     //从题库中选择题目加入同步测试中
     @RequestMapping(value = "/addQuestion")
     @ResponseBody
-    public Integer addQuestion(@RequestParam(name = "questionId")Integer questionId)
+    public Integer addQuestion(@RequestParam(name = "questionId")Integer questionId,
+                               @RequestParam(name = "learningPlanId")Integer learingPlanId)
     {
         try{
+
             QuestionDO questionDO = questionService.findOne(questionId);
             questionDO.setVersion(2);
             questionService.save(questionDO);
@@ -89,7 +93,7 @@ public class SyncTestFromTKController {
             }
             syncTestFromTKDO.setQuestionAnswer(questionDO.getAnswer());
             //typeid左侧菜单的id，为了列表显示时过滤出同一专题下的题目
-            syncTestFromTKDO.setTypeId(questionDO.getTypeid());
+            syncTestFromTKDO.setTypeId(learingPlanId);
             syncTestFromTKDO.setQuestionId(questionDO.getId());
             syncTestFromTKService.save(syncTestFromTKDO);
             return 1;
@@ -106,6 +110,7 @@ public class SyncTestFromTKController {
     public String getSyncTestFromYKList(@RequestParam(name = "typeid")Integer typeid,HttpServletRequest request,
                                         SyncTestFromTKDO syncTestFromTKDO, Map model)
     {
+        //这里的typeid为学案id
         String type = request.getParameter("questionType");
         Integer roleId = (Integer) request.getSession().getAttribute("role");
         Integer typeInt = 0;
@@ -158,11 +163,11 @@ public class SyncTestFromTKController {
     @RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo delete(SyncTestFromTKDO syncTestFromTKDO) {
-        Integer typeId = syncTestFromTKDO.getTypeId();
-        LeftMenuDO leftMenuDO = leftMenuService.findOne(typeId);
-        String typeName = leftMenuDO.getTitle();
+        //Integer typeId = syncTestFromTKDO.getTypeId();
+        //LeftMenuDO leftMenuDO = leftMenuService.findOne(typeId);
+        //String typeName = leftMenuDO.getTitle();
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
-                "已经作废", "同步测试");
+                "已经作废", "开始测试");
         try {
             //假删除
             /*syncTestFromTKDO.setDeleteFlag(true);

@@ -46,7 +46,7 @@ public class SyncTestFromTKService {
             predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
             if(!Lang.isEmpty(typeid))
             {
-                predicates.add(criteriaBuilder.equal(root.get("typeId").as(Integer.class),typeid));
+                predicates.add(criteriaBuilder.equal(root.get("learningPlanId").as(Integer.class),typeid));
             }
             if(!Lang.isEmpty(questionType) && questionType!=0)
             {
@@ -65,7 +65,7 @@ public class SyncTestFromTKService {
             predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
             if(!Lang.isEmpty(typeid))
             {
-                predicates.add(criteriaBuilder.equal(root.get("typeId").as(Integer.class),typeid));
+                predicates.add(criteriaBuilder.equal(root.get("learningPlanId").as(Integer.class),typeid));
             }
             if(!Lang.isEmpty(questionType) && questionType!=0)
             {

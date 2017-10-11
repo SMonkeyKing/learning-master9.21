@@ -1,7 +1,7 @@
 <div class="pageContent">
     <form method="post" enctype="multipart/form-data" action="${ctx}/syncTest/save" class="pageForm required-validate" onsubmit="return iframeCallback(this, navTabAjaxDone);" >
         <div class="pageFormContent" layoutH="60">
-            <fieldset>
+            <fieldset id="field">
                 <legend>添加同步测试</legend>
                 <dl class="nowrap">
                     <dt>上传测试题目：</dt>
@@ -19,10 +19,18 @@
                         <input type="file" name="file2" />
                     </div>
                 </dl>
-                <dl class="nowrap">
+                <#--<dl class="nowrap">
                     <dt>选择题答案：</dt>
                     <dd>
                         <textarea name="xzt_answer"></textarea>
+                    </dd>
+                </dl>-->
+                <dl class="nowrap">
+                    <dt>选择题数量：</dt>
+                    <dd>
+                        <input type="text" name="xzt_num" id="xzt_num"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="button" value="生成答题卡" onclick="produceCard()">
                     </dd>
                 </dl>
             </fieldset>
@@ -46,4 +54,22 @@
         })
 
     });
+    
+    function  produceCard() {
+        var num = $("#xzt_num").val();
+        //多少道选择题就增加多少了输入框
+        alert(num);
+        var html="";
+        for(var i=1;i<=num;i++)
+        {
+
+            html+='<dl class="nowrap">\n';
+            html+='<dt>第'+i+'题：</dt>\n';
+            html+='<dd>\n';
+            html+='<input type="text" name="xzt_num'+i+'"/>\n';
+            html+='<dd>\n';
+            html+='<dl>\n';
+        }
+        $("#field").append(html);
+    }
 </script>

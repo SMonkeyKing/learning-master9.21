@@ -2,6 +2,7 @@ package com.zju.app.business.tbxuean.web;
 
 import com.zju.app.business.stjj.service.LeftMenuService;
 import com.zju.app.business.stjj.service.QuestionService;
+import com.zju.app.business.tbxuean.service.PaperTestService;
 import com.zju.app.business.tbxuean.service.StudentAnswerService;
 import com.zju.app.business.tbxuean.service.SyncTestFromTKService;
 import com.zju.app.business.tbxuean.service.SyncTestService;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,9 @@ public class SyncTestController {
 
     @Autowired
     SyncTestFromTKService syncTestFromTKService;
+
+    @Autowired
+    PaperTestService paperTestService;
 
     @ModelAttribute
     public void model(@RequestParam(name = "id", required = false) Integer id, Map<String, Object> model) {
@@ -147,6 +152,7 @@ public class SyncTestController {
         //listSize--题目的数量，如果没取到该值，就默认为20
         String length = request.getParameter("listSize");
         Integer typeidInt = Integer.parseInt(request.getParameter("typeid"));
+
         List<SyncTestFromTKDO> syncTestFromTKDOList = syncTestFromTKService.findAllList(typeidInt,0,syncTestFromTKDO1);
         Integer len = syncTestFromTKDOList.size();
         //List<SyncTestFromTKDO> syncTestFromTKDOJudgeList = syncTestFromTKService.findAllList(typeidInt,1,syncTestFromTKDO1);
@@ -290,44 +296,82 @@ public class SyncTestController {
     }
 
 
+    //添加试卷类的测试
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo save(@RequestParam(name = "file1") MultipartFile file1,@RequestParam(name = "file2") MultipartFile file2,
-                               @RequestParam(name = "xzt_answer")String answer,@RequestParam(name = "typeid")Integer id) {
+                               @RequestParam(name = "typeid")Integer id, @RequestParam(name = "xzt_num")Integer xztNum,HttpServletRequest request)
+
+    {
+        //这里的navTabId要改
+        LeftMenuDO leftMenuDO = leftMenuService.findOne(id);
+        String tabName = leftMenuDO.getTitle();
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
-                "操作成功", "高一试题", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+                "操作成功", tabName, AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
 
         try {
-            SyncTestDO syncTestDO = new SyncTestDO();
-            //上传题目
-            if(file1!=null) {
-                String oldname1 = file1.getOriginalFilename();
-                syncTestDO.setName(oldname1);
-                String suffixName = file1.getOriginalFilename().substring(file1.getOriginalFilename().lastIndexOf("."));
+            Thread thread = new Thread()
+            {
+                public void run(){
+                    try {
+                        SyncTestDO syncTestDO = new SyncTestDO();
+                        //上传题目
+                        if (file1 != null) {
+                            String oldname1 = file1.getOriginalFilename();
+                            syncTestDO.setName(oldname1);
+                            String suffixName = file1.getOriginalFilename().substring(file1.getOriginalFilename().lastIndexOf("."));
 
-                //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
-                String newFileName1 = "D:\\work\\courseWare\\" + oldname1;
-                //System.out.print("0000000" + newFileName);
-                FileCopyUtils.copy(file1.getBytes(), new File(newFileName1));
-                String url1 = "http://localhost/courseWare/" + oldname1;
-                syncTestDO.setUrl(url1);
-                syncTestDO.setTypeid(id);
-                syncTestDO.setXztAnswer(answer);
-            }
-            //上传答案
-            if(file2!=null) {
-                String oldname2 = file2.getOriginalFilename();
-                syncTestDO.setName(oldname2);
-                String suffixName = file2.getOriginalFilename().substring(file2.getOriginalFilename().lastIndexOf("."));
+                            //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
+                            String newFileName1 = "D:\\work\\courseWare\\" + oldname1;
+                            //System.out.print("0000000" + newFileName);
+                            FileCopyUtils.copy(file1.getBytes(), new File(newFileName1));
+                            String url1 = "http://localhost/courseWare/" + oldname1;
+                            syncTestDO.setUrl(url1);
 
-                //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
-                String newFileName2 = "D:\\work\\courseWare\\" + oldname2;
-                //System.out.print("0000000" + newFileName);
-                FileCopyUtils.copy(file2.getBytes(), new File(newFileName2));
-                String url2 = "http://localhost/courseWare/" + oldname2;
-                syncTestDO.setAnswerUrl(url2);
+                        }
+                        syncTestDO.setTypeid(id);
+                        syncTestDO.setXztNum(xztNum);
+                        //上传答案
+                        if (file2 != null) {
+                            String oldname2 = file2.getOriginalFilename();
+                            syncTestDO.setName(oldname2);
+                            String suffixName = file2.getOriginalFilename().substring(file2.getOriginalFilename().lastIndexOf("."));
+
+                            //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
+                            String newFileName2 = "D:\\work\\courseWare\\" + oldname2;
+                            //System.out.print("0000000" + newFileName);
+                            FileCopyUtils.copy(file2.getBytes(), new File(newFileName2));
+                            String url2 = "http://localhost/courseWare/" + oldname2;
+                            syncTestDO.setAnswerUrl(url2);
+                        }
+
+                        syncTestService.save(syncTestDO);
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();;
+                    }
+                }
+            };
+            thread.start();
+            //保证上面的线程先执行完
+            thread.join();
+            //找到最新插入的试卷的id
+            SyncTestDO syncTestDO = syncTestService.findLatest();
+
+            Integer paperId = syncTestDO.getId();
+
+            //把选择题答案存进paper_test_question表
+            for (int i=1;i<=xztNum;i++)
+            {
+                String ans = request.getParameter("xzt_num"+i);
+                PaperTestQuestionDO paperTestQuestionDO = new PaperTestQuestionDO();
+                paperTestQuestionDO.setPaperid(paperId);
+                paperTestQuestionDO.setQuestionid(i);
+                paperTestQuestionDO.setAnswer(ans);
+                paperTestService.save(paperTestQuestionDO);
             }
-            syncTestService.save(syncTestDO);
+
         } catch (Exception e) {
             ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
             ajaxResponseVo.setMessage("操作失败!");

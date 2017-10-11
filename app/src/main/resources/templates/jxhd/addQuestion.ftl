@@ -17,7 +17,7 @@
                         <select name="type">
                             <option value ="1">选择题</option>
                             <option value ="2">填空题</option>
-                            <option value ="3">计算题</option>
+                            <option value ="3">综合题</option>
                         </select>
                     </dd>
                 </dl>

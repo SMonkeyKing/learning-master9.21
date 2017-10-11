@@ -12,7 +12,7 @@
                 <#--<a style="color:blue" href="#">删除</a>-->
             </p>
             <p>
-                <label>计算题：</label>
+                <label>综合题：</label>
                 <label>${jstNum!}&nbsp;道</label>
                 <#--<a style="color:blue" href="#">删除</a>-->
             </p>

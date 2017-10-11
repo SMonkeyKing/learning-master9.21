@@ -42,7 +42,7 @@
                     <td><button id="btn0" type="submit" value="0">全部</button></td>
                     <td><button id="btn1" type="submit" value="1">选择题</button></td>
                     <td><button id="btn2" type="submit" value="2">填空题</button></td>
-                    <td><button id="btn3" type="submit" value="3">计算题</button></td>
+                    <td><button id="btn3" type="submit" value="3">综合题</button></td>
                 </tr>
             </table>
         </div>

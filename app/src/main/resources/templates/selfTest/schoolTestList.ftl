@@ -43,9 +43,12 @@
         <tr align="center">
             <th width="10%"><b>序号</b></th>
             <th width="40%"><b>名称</b></th>
+            <th width="15%"><b>选择题正确率</b></th>
             <th width="15%"><b>上传时间</b></th>
             <th width="15%"><b>测试</b></th>
+            <#if (role<2)>
             <th width="20%"><b>操作</b></th>
+            </#if>
         </tr>
         </thead>
         <tbody>
@@ -54,15 +57,16 @@
             <tr align="center">
                 <td>${courseWare_index?if_exists+page.pageNum*page.numPerPage+1}</td>
                 <td><a href="${courseWare.url!}">${courseWare.name!}</a></td>
+                <td><a href="${ctx}/schoolTest/getRate?paperid=${courseWare.id!}" target="navTab">查看正确率</a></td>
                 <td>${courseWare.dateCreated!}</td>
                 <td>
                     <a style="color:red" href="${ctx}/syncTest/doTest?syncTestId=${courseWare.id!}" target="navTab">开始测试</a>
                 </td>
                 <td>
-
+                    <#if (role<2)>
                     <!-- 下载 -->
                     <a style="color:blue" href="${courseWare.url!}">下载</a>
-                    <#if (role<2)>
+
                     <!-- 修改 -->
                     <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}" target="navTab">修改</a>
                     <!-- 作废 -->

@@ -14,10 +14,10 @@
                 <dl class="nowrap">
                     <dt>题目类型：</dt>
                     <dd>
-                        <select name="type">
+                        <select name="type" id="selectType">
                             <option value ="1">选择题</option>
                             <option value ="2">填空题</option>
-                            <option value ="3">计算题</option>
+                            <option value ="3">综合题</option>
                         </select>
                     </dd>
                 </dl>
@@ -32,26 +32,26 @@
                             <#--<input type="text" id="question" name="question" style="height: 30px;width: 800px;">-->
                     </dd>
                 </dl>
-                <dl class="nowrap">
+                <dl class="nowrap" id="optionA">
                     <dt>选项A：</dt>
                     <dd>
                         <input  type="text" id="answerA" name="answerA" style="height: 30px;width: 800px" />
                     </dd>
                 </dl>
 
-                <dl class="nowrap">
+                <dl class="nowrap" id="optionB">
                     <dt>选项B：</dt>
                     <dd>
                         <input  type="text" id="answerB" name="answerB" style="height: 30px;width: 800px" />
                     </dd>
                 </dl>
-                <dl class="nowrap">
+                <dl class="nowrap" id="optionC">
                     <dt>选项C：</dt>
                     <dd>
                         <input  type="text" id="answerC" name="answerC" style="height: 30px;width: 800px" />
                     </dd>
                 </dl>
-                <dl class="nowrap">
+                <dl class="nowrap" id="optionD">
                     <dt>选项D：</dt>
                     <dd>
                         <input  type="text" id="answerD" name="answerD" style="height: 30px;width: 800px" />
@@ -89,6 +89,35 @@
 </div>
 
 <script type="text/javascript">
+    $(function () {
+        $("#selectType").click(function () {
+            var obj=document.getElementById('selectType');
+            var index=obj.selectedIndex; //序号，取当前选中选项的序号
+            var val = obj.options[index].value;
+            //alert(1111);
+            //alert(val);
+            console.log(val);
+            if (val!="1") {
+                //alert(2);
+                document.getElementById('optionA').style.display="none";
+                document.getElementById('optionB').style.display="none";
+                document.getElementById('optionC').style.display="none";
+                document.getElementById('optionD').style.display="none";
+            }else{
+                document.getElementById('optionA').style.display="inline";
+                document.getElementById('optionB').style.display="inline";
+                document.getElementById('optionC').style.display="inline";
+                document.getElementById('optionD').style.display="inline";
+            }
+            /*var index = this.selectedIndex;
+            if(index>1)
+            {
+                document.getElementById('optionA').style.visibility="hidden";
+            }*/
+        });
+    })
+
+    //var val = obj.options[index].value;
     var E = window.wangEditor;
     var editor1 = new E('#editor1');
     editor1.customConfig.uploadImgServer = '${ctx}/jxhd/uploadImg';

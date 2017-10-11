@@ -27,6 +27,10 @@ public class SyncTestService {
     @Autowired
     SysnTestRepos sysnTestRepos;
 
+    public SyncTestDO findLatest()
+    {
+        return sysnTestRepos.findLatestSyncTestDO();
+    }
     public Page<SyncTestDO> findAll1(List<Integer> lpIds, SyncTestDO syncTestDO, Pageable pageable)
     {
         Specification querySpecification = (Specification<SyncTestFromTKDO>) (root, criteriaQuery, criteriaBuilder) -> {

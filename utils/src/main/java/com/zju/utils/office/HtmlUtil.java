@@ -5,7 +5,8 @@ package com.zju.utils.office;
  */
 public class HtmlUtil {
 
-    final static String FILE_DIR = "C:\\Users\\xujingfeng\\Desktop\\";
+    //final static String FILE_DIR = "http://localhost/courseWare/";
+    final static String FILE_DIR = "D:\\work\\courseWare\\";
     final static String DEFAULT_ENCODING = "utf-8";
 
     public static String doc2Html(String docDir) {

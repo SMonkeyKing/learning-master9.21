@@ -37,6 +37,9 @@ public class SyncTestFromTKDO extends BaseDomain{
     @Column(name = "stu_ans")
     private String stuAns;
 
+    @Column(name = "learning_plan_id")
+    private Integer learningPlanId;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +94,13 @@ public class SyncTestFromTKDO extends BaseDomain{
 
     public void setStuAns(String stuAns) {
         this.stuAns = stuAns;
+    }
+
+    public Integer getLearningPlanId() {
+        return learningPlanId;
+    }
+
+    public void setLearningPlanId(Integer learningPlanId) {
+        this.learningPlanId = learningPlanId;
     }
 }

@@ -57,7 +57,7 @@
             <#list courseWares as courseWare>
             <tr align="center">
                 <td>${courseWare_index?if_exists+page.pageNum*page.numPerPage+1}</td>
-                <td><a href="${courseWare.url!}" onclick="openWord(${courseWare.url!})" target="_blank">${courseWare.name!}</a></td>
+                <td><a href="${ctx}/office?path=${courseWare.name}" onclick="openWord(${courseWare.url!})" target="_blank">${courseWare.name!}</a></td>
                 <#--<td><embed src="${courseWare.url!}">${courseWare.name!}</embed></td>-->
                 <td>${courseWare.uploadName!}</td>
                 <td>${courseWare.dateCreated!}</td>

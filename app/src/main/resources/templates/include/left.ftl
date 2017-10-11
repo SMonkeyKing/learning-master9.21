@@ -39,11 +39,11 @@
                                         <ul>
                                         <#assign level4menus = level3.getSubmenus()/>
                                         <#list level4menus as level4>
-                                            <li><a href="<#if level4.getUrl()??>${ctx}${level4.getUrl()!}</#if>?<#if level4.paramsid??>typeid=${level4.getParamsid()!}<#else >typeid=${level4.getId()!}</#if>" target="navTab" rel="${level4.getTitle()!}">${level4.getTitle()}</a>
+                                            <li><a <#if level4.getUrl()??>href="${ctx}${level4.getUrl()!}<#if level4.paramsid??>?typeid=${level4.getParamsid()!}<#else >?typeid=${level4.getId()!}</#if>" target="navTab" rel="${level4.getTitle()!}"</#if>>${level4.getTitle()}</a>
                                                 <ul>
                                                     <#assign level5menus = level4.getSubmenus()/>
                                                     <#list level5menus as level5>
-                                                        <li><a href="<#if level5.getUrl()??>${ctx}${level5.getUrl()!}</#if>?<#if level5.paramsid??>typeid=${level5.getParamsid()!}<#else >typeid=${level5.getId()!}</#if>" target="navTab" rel="${level5.getTitle()!}">${level5.getTitle()}</a>
+                                                        <li><a href="<#if level5.getUrl()??>${ctx}${level5.getUrl()!}</#if><#if level5.paramsid??>?typeid=${level5.getParamsid()!}<#else >?typeid=${level5.getId()!}</#if>" target="navTab" rel="${level5.getTitle()!}">${level5.getTitle()}</a>
 
                                                         </li>
                                                     </#list>

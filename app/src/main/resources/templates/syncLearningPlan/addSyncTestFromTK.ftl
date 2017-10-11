@@ -33,7 +33,7 @@
 <div class="pageHeader">
     <form id="questionForm" onsubmit="return navTabSearch(this);" action="${ctx}/syncTestFromTK/config" class="required-validate" method="post">
         <div class="searchBar">
-
+            <input type="hidden" name="learningPlanId" value="${learningPlanId}">
             <table class="searchContent">
                 <tr>
                     <td>题目类型：</td>
@@ -42,7 +42,7 @@
                     <td><button id="btn0" type="submit" value="0">全部</button></td>
                     <td><button id="btn1" type="submit" value="1">选择题</button></td>
                     <td><button id="btn2" type="submit" value="2">填空题</button></td>
-                    <td><button id="btn3" type="submit" value="3">计算题</button></td>
+                    <td><button id="btn3" type="submit" value="3">综合题</button></td>
                 </tr>
             </table>
         </div>
@@ -63,7 +63,7 @@
             <div class="panelBar">
                 <ul class="toolBar">
                     <#if questionDO.getVersion() == 1>
-                        <li style="float: right"><a class="add" href="javascript:void(0)" id="add${questionDO.getId()}" name="add${questionDO.getId()}" onclick="addToSyncTest(${questionDO.getId()});" ><span id="add">加入同步测试</span></a></li>
+                        <li style="float: right"><a class="add" href="javascript:void(0)" id="add${questionDO.getId()}" name="add${questionDO.getId()}" onclick="addToSyncTest(${questionDO.getId()},${learningPlanId});" ><span id="add">加入同步测试</span></a></li>
                     <#else >
                         <li style="float: right;color: grey"><a href="javascript:return false;" onclick="return false;" ><span id="add" style="color: #CCC;">已加入同步测试</span></a></li>
                     </#if>
@@ -123,7 +123,9 @@
 
     });
 
-    function  addToSyncTest(id) {
+    function  addToSyncTest(id,lid) {
+        alert(id);
+        alert(lid);
         /*var add = document.getElementsById("add");
         add.innerHTML = "已加入试卷"
         add.disabled = true;
@@ -134,11 +136,12 @@
         });*/
 
        $.ajax({
-            type: "POST",
+            type: "GET",
             url: "${ctx}/syncTestFromTK/addQuestion",
-            data: {'questionId': id},
+            data: {'questionId': id,'learningPlanId': lid},
             context: document.getElementsByName("add"+id),
             success: function (data) {
+                alert(11111);
                 //alert(data);
                 if (data == 1) {
                     $(this).css("color", "#CCC");

@@ -1,5 +1,6 @@
 package com.zju.app.business.jxhd.service;
 
+import com.zju.model.CompositeQuestionAnswerDO;
 import com.zju.model.JudgeAnswerDO;
 import com.zju.model.JxhdStudentAnswerDO;
 import com.zju.repository.JxhdStudentAnswerRepos;
@@ -56,6 +57,19 @@ public class JxhdStudentAnswerService {
         return jxhdStudentAnswerRepos.findAll(querySpecification, pageable);
     }
 
+    public List<JxhdStudentAnswerDO> findAllList(Integer paperid)
+    {
+        Specification querySpecification = (Specification<JxhdStudentAnswerDO>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            //predicates.add(criteriaBuilder.isFalse(root.get("deleteFlag")));
+            if(!Lang.isEmpty(paperid))
+            {
+                predicates.add(criteriaBuilder.equal(root.get("paperId").as(Integer.class),paperid));
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        return jxhdStudentAnswerRepos.findAll(querySpecification);
+    }
     //获取每道题选A，B，C,D的人数和正确的人数（正确率统计）
     public List<JudgeAnswerDO> findJudgeAnswerList()
     {
@@ -67,7 +81,7 @@ public class JxhdStudentAnswerService {
                 "sum(case when answer='D' then 1 else 0 end) as answerD,\n" +
                 "sum(case when correct=1 then 1 else 0 end) as correct,\n" +
                 "1 as rate "+
-                "from learning.jxhd_student_answer\n" +
+                "from learning.jxhd_student_answer where question_type=1\n" +
                 "group by paper_id";
         Query query = entityManager.createNativeQuery(sql);
         query.unwrap(SQLQuery.class)
@@ -89,4 +103,16 @@ public class JxhdStudentAnswerService {
         return query.getResultList();
     }
 
+    //获取填空综合题题号和答题人数
+    public List<CompositeQuestionAnswerDO> getCompositeQuestionAnswer()
+    {
+        String sql = "SELECT paper_id as paper_id,count(*) as num FROM learning.jxhd_student_answer " +
+                "where question_type >1 group by paper_id";
+        Query query = entityManager.createNativeQuery(sql);
+        query.unwrap(SQLQuery.class)
+                .addScalar("paper_id", StandardBasicTypes.INTEGER)
+                .addScalar("num",StandardBasicTypes.INTEGER)
+                .setResultTransformer(Transformers.aliasToBean(CompositeQuestionAnswerDO.class));
+        return query.getResultList();
+    }
 }

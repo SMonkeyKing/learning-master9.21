@@ -5,15 +5,19 @@
     <#--<input type="hidden" name="orderField" value="lastUpdated">-->
 </form>
 
-<div class="pageHeader">
+<#--<div class="pageHeader">
     <form onsubmit="return navTabSearch(this);" action="${ctx}/jxhd/studentAns" class="required-validate" method="post">
         <div class="searchBar">
 
         </div>
     </form>
-</div>
+</div>-->
 <div class="pageContent">
-
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li><a class="add" href="${ctx}/jxhd/img/stuAns" target="_blank"><span>查看上传的图片列表</span></a></li>
+        </ul>
+    </div>
     <table class="table" width="100%" layoutH="85">
         <thead>
         <tr align="center">

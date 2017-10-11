@@ -2,18 +2,19 @@
     <input type="hidden" name="pageNum" value="${page.currentPage!}"/>
     <input type="hidden" name="numPerPage" value="${page.numPerPage!}"/>
     <input type="hidden" name="orderBy" value="desc">
-    <input type="hidden" name="orderField" value="lastUpdated">
-    <input type="hidden" name="name" value="${courseWare.name!}">
+    <input type="hidden" name="orderField" value="dateCreated">
+    <input type="hidden" name="name" value="${tbxaLearningPlanDO.name!}">
 </form>
 
 <div class="pageHeader">
     <form onsubmit="return navTabSearch(this);" action="${ctx}/syncLearningPlan/config?typeid=${typeid}" class="required-validate" method="post">
         <div class="searchBar">
+            <input type="hidden" name="typeid" value="${typeid}">
             <table class="searchContent">
                 <tr>
                     <td>
                         名称：<input type="text"  name="name" maxlength="20"
-                                     value="${courseWare.name!}"/>
+                                     value="${tbxaLearningPlanDO.name!}"/>
                     </td>
                     <td>
                         <div class="buttonContent">
@@ -48,34 +49,34 @@
             <th width="50"><b>序号</b></th>
             <th width="180"><b>名称</b></th>
             <th width="70"><b>上传时间</b></th>
-            <#if (role<2)>
             <th width="150"><b>同步测试</b></th>
-            </#if>
             <th width="180"><b>操作</b></th>
         </tr>
         </thead>
         <tbody>
-        <#if courseWares??&&courseWares?size gt 0>
-            <#list courseWares as courseWare>
+        <#if tbxaLearningPlanDOs??&&tbxaLearningPlanDOs?size gt 0>
+            <#list tbxaLearningPlanDOs as tbxaLearningPlanDO>
             <tr align="center">
-                <td>${courseWare_index?if_exists+page.pageNum*page.numPerPage+1}</td>
-                <td><a href="${courseWare.url!}">${courseWare.name!}</a></td>
-                <td>${courseWare.dateCreated!}</td>
-                <#if (role<2)>
+                <td>${tbxaLearningPlanDO_index?if_exists+page.pageNum*page.numPerPage+1}</td>
+                <td><a href="${tbxaLearningPlanDO.url!}">${tbxaLearningPlanDO.name!}</a></td>
+                <td>${tbxaLearningPlanDO.dateCreated!}</td>
+
                 <td>
-                    <a style="color:red" href="${ctx}/syncLearningPlan/testAdd?learningPlanId=${courseWare.id}" target="navTab">添加</a>
-                    <a style="color:red" href="${ctx}/syncLearningPlan/testAdd?learningPlanId=${courseWare.id}" target="navTab">修改</a>
-                </td>
+                <#if (role<2)>
+                    <a style="color:red" href="${ctx}/syncTestFromTK/config?id=${tbxaLearningPlanDO.id}&typeid=${tbxaLearningPlanDO.typeid}" target="navTab">添加测试</a>
                 </#if>
+                    <a style="color:red" href="${ctx}/syncTestFromTK/list?typeid=${tbxaLearningPlanDO.id}" target="navTab">开始测试</a>
+                </td>
+
                 <td>
 
                     <!-- 下载 -->
-                    <a style="color:blue" href="${courseWare.url!}">下载</a>
+                    <a style="color:blue" href="${tbxaLearningPlanDO.url!}">下载</a>
                     <#if (role<2)>
                     <!-- 修改 -->
-                    <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}" target="navTab">修改</a>
+                    <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${tbxaLearningPlanDO.id}" target="navTab">修改</a>
                     <!-- 作废 -->
-                    <a style="color:blue" href="${ctx}/courseWare/delete?id=${courseWare.id}" target="ajaxTodo" title="温馨提示：是否确认删除" >删除</a>
+                    <a style="color:blue" href="${ctx}/courseWare/delete?id=${tbxaLearningPlanDO.id}" target="ajaxTodo" title="温馨提示：是否确认删除" >删除</a>
                     </#if>
                 </td>
             </tr>

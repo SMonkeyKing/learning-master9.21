@@ -17,13 +17,18 @@ public class PaperTestQuestionDO {
 
     private Integer questionid;
 
+    private String answer;
+
+    @Column(name = "stu_ans")
+    private String stuAns;
+
     @Column(name = "correct_num")
-    private Integer correctNum;
+    private Integer correctNum=0;
 
     @Column(name = "correct_rate")
-    private double correctRate;
+    private String correctRate;
 
-    private Integer doNum;
+    private Integer doNum=0;
 
     public Integer getId() {
         return id;
@@ -57,11 +62,11 @@ public class PaperTestQuestionDO {
         this.correctNum = correctNum;
     }
 
-    public double getCorrectRate() {
+    public String getCorrectRate() {
         return correctRate;
     }
 
-    public void setCorrectRate(double correctRate) {
+    public void setCorrectRate(String correctRate) {
         this.correctRate = correctRate;
     }
 
@@ -71,5 +76,21 @@ public class PaperTestQuestionDO {
 
     public void setDoNum(Integer doNum) {
         this.doNum = doNum;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getStuAns() {
+        return stuAns;
+    }
+
+    public void setStuAns(String stuAns) {
+        this.stuAns = stuAns;
     }
 }

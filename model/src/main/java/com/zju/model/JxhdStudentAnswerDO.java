@@ -32,6 +32,9 @@ public class JxhdStudentAnswerDO extends BaseDomain {
 
     private Integer correct;
 
+    @Column(name = "question_type")
+    private Integer questionType;
+
     public Integer getId() {
         return id;
     }
@@ -86,5 +89,13 @@ public class JxhdStudentAnswerDO extends BaseDomain {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public Integer getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(Integer questionType) {
+        this.questionType = questionType;
     }
 }

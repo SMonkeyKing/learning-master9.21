@@ -33,6 +33,7 @@ public class WordUtil {
     public static String doc2Html(String docDir) {
         HWPFDocument wordDocument;
         String uuid = UUID.randomUUID().toString();
+        //新建文件夹
         new File(HtmlUtil.FILE_DIR + uuid).mkdir();
         try {
             //字节码输出流
@@ -56,9 +57,11 @@ public class WordUtil {
              * suggestedName: 生成的图片名称
              */
             wordToHtmlConverter.setPicturesManager((content, pictureType, suggestedName, widthInches, heightInches) -> {
+                //图片的路径
                 String resultName = HtmlUtil.FILE_DIR + uuid + "\\" + suggestedName;
+                String resultName1 =" http://localhost/courseWare/"+ uuid + "/" + suggestedName;
                 generatePicture(content, resultName);
-                return resultName;
+                return resultName1;
             });
             //转化器开始转化接收到的dom对象
             wordToHtmlConverter.processDocument(wordDocument);

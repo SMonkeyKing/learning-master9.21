@@ -1,10 +1,12 @@
 package com.zju.app.business.selfTest.web;
 
 import com.zju.app.business.stjj.service.LeftMenuService;
+import com.zju.app.business.tbxuean.service.PaperTestService;
 import com.zju.app.business.tbxuean.service.SyncTestService;
 import com.zju.app.bussiness.jxkj.service.CourseWareService;
 import com.zju.app.bussiness.jxkj.web.CourseWareController;
 import com.zju.model.CourseWareDO;
+import com.zju.model.PaperTestQuestionDO;
 import com.zju.model.SyncTestDO;
 import com.zju.utils.dwz.DwzPageVo;
 import org.slf4j.Logger;
@@ -37,6 +39,9 @@ public class SchoolTestController {
     @Autowired
     SyncTestService syncTestService;
 
+    @Autowired
+    PaperTestService paperTestService;
+
     @RequestMapping(value = {"/config"})
     public String list(@RequestParam(name = "typeid")Integer id, SyncTestDO syncTestDO, DwzPageVo page, Map model, HttpServletRequest request) {
         /*Page<CourseWareDO> pageLists = courseWareService.findAll(id,courseWare, page.getPageable());
@@ -64,4 +69,15 @@ public class SchoolTestController {
         return "/syncLearningPlan/addSyncTest";
     }
 
+
+    //查看试卷的选择题正确率
+    @RequestMapping(value = {"/getRate"})
+    public String getRate(@RequestParam(name = "paperid")Integer id,Map model)
+    {
+        SyncTestDO syncTestDO = syncTestService.findOne(id);
+        List<PaperTestQuestionDO> paperTestQuestionDOS = paperTestService.findAllByPaperId(id);
+        model.put("syncTestDO",syncTestDO);
+        model.put("paperTestQuestionDOS",paperTestQuestionDOS);
+        return "/syncLearningPlan/paperTestRate";
+    }
 }

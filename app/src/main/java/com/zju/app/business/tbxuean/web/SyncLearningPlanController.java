@@ -1,7 +1,9 @@
 package com.zju.app.business.tbxuean.web;
 
+import com.zju.app.business.tbxuean.service.TbxaLearningPlanService;
 import com.zju.app.bussiness.jxkj.service.CourseWareService;
 import com.zju.model.CourseWareDO;
+import com.zju.model.TbxaLearningPlanDO;
 import com.zju.utils.Lang;
 import com.zju.utils.dwz.AjaxResponseVo;
 import com.zju.utils.dwz.DwzPageVo;
@@ -32,22 +34,51 @@ public class SyncLearningPlanController {
     @Autowired
     CourseWareService courseWareService;
 
-    @ModelAttribute
+    @Autowired
+    TbxaLearningPlanService tbxaLearningPlanService;
+
+    /*@ModelAttribute
     public void model(@RequestParam(name = "id", required = false) Integer id, Map<String, Object> model) {
         if (!Lang.isEmpty(id)) {
             CourseWareDO courseWare = courseWareService.findOne(id);
             //如果有id存在，首先查出数据库中的对象，避免表单中未出现的空属性覆盖掉原有的值
             model.put("courseWareDO", courseWare);
         }
-    }
+    }*/
 
-    @RequestMapping(value = {"/config"})
+
+
+    /*@RequestMapping(value = {"/config"})
     public String list(@RequestParam(name = "typeid")Integer id, CourseWareDO courseWare, DwzPageVo page, Map model, HttpServletRequest request) {
         Page<CourseWareDO> pageLists = courseWareService.findAll(id,courseWare, page.getPageable());
         page.setTotalCount(pageLists.getTotalElements());
         model.put("courseWare", courseWare);
         model.put("page", page);
         model.put("courseWares", pageLists.getContent());
+        //把菜单的id传到前端
+        model.put("typeid",id);
+        Integer roleId = (Integer) request.getSession().getAttribute("role");
+        model.put("role",roleId);
+        return "/syncLearningPlan/learningPlanList";
+    }*/
+
+
+    @ModelAttribute
+    public void model(@RequestParam(name = "id", required = false) Integer id, Map<String, Object> model) {
+        if (!Lang.isEmpty(id)) {
+            TbxaLearningPlanDO tbxaLearningPlanDO = tbxaLearningPlanService.findOne(id);
+            //如果有id存在，首先查出数据库中的对象，避免表单中未出现的空属性覆盖掉原有的值
+            model.put("tbxaLearningPlanDO", tbxaLearningPlanDO);
+        }
+    }
+
+    @RequestMapping(value = {"/config"})
+    public String list(@RequestParam(name = "typeid")Integer id, TbxaLearningPlanDO tbxaLearningPlanDO, DwzPageVo page, Map model, HttpServletRequest request) {
+        Page<TbxaLearningPlanDO> pageLists = tbxaLearningPlanService.findAll(id,tbxaLearningPlanDO, page.getPageable());
+        page.setTotalCount(pageLists.getTotalElements());
+        model.put("tbxaLearningPlanDO", tbxaLearningPlanDO);
+        model.put("page", page);
+        model.put("tbxaLearningPlanDOs", pageLists.getContent());
         //把菜单的id传到前端
         model.put("typeid",id);
         Integer roleId = (Integer) request.getSession().getAttribute("role");
