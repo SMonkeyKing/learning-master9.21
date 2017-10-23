@@ -1,3 +1,11 @@
+<style>
+    .myEditor p{
+        height: auto;
+        width: 750px;
+        margin: 0px 0px;
+        padding: 2px 0px;
+    }
+</style>
 <script>
     function doAdd()
     {
@@ -8,7 +16,7 @@
 </script>
 <div class="pageContent">
     <form method="post" enctype="multipart/form-data" action="${ctx}/jxhd/question/save" class="pageForm required-validate" onsubmit="return iframeCallback(this, navTabAjaxDone);" >
-        <div class="pageFormContent" layoutH="60">
+        <div class="pageFormContent" layoutH="55">
             <fieldset>
                 <legend>添加题目</legend>
                 <dl class="nowrap">
@@ -25,7 +33,7 @@
                     <dt>题目描述：</dt>
                     <dd>
                         <input  type="hidden" id="question" name="question" />
-                            <div id="editor1" name="editorContent" style="width: 800px;">
+                            <div class="myEditor" id="editor1" name="editorContent" style="width: 800px;">
 
                         </div>
                         <#--<textarea id="question" name="question"  style="height: 200px;width: 800px;"></textarea>-->
@@ -67,7 +75,7 @@
                     <dt>题目解析：</dt>
                     <dd>
                         <input  type="hidden" id="answer" name="answer" />
-                        <div id="editor2" name="editorAnswer" style="width: 800px;">
+                        <div class="myEditor"  id="editor2" name="editorAnswer" style="width: 800px;">
 
                         </div>
                         <#--<textarea id="answer" name="answer" style="height: 200px;width: 800px;"></textarea>-->
@@ -120,6 +128,7 @@
     //var val = obj.options[index].value;
     var E = window.wangEditor;
     var editor1 = new E('#editor1');
+
     editor1.customConfig.uploadImgServer = '${ctx}/jxhd/uploadImg';
     editor1.customConfig.uploadFileName = 'myimgfile';
     editor1.customConfig.uploadImgHooks = {

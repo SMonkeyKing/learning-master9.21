@@ -1,6 +1,6 @@
 <div class="pageContent">
     <form method="post" enctype="multipart/form-data" action="${ctx}/syncLearningPlan/save" class="pageForm required-validate" onsubmit="return iframeCallback(this, navTabAjaxDone);" >
-        <div class="pageFormContent" layoutH="60">
+        <div class="pageFormContent" layoutH="55">
             <fieldset>
                 <legend>添加学案</legend>
                 <dl class="nowrap">
@@ -12,7 +12,12 @@
                             <input type="file" name="file" multiple="multiple"/>
                         </div>
                     </dd>
-
+                </dl>
+                <dl>
+                    <dt>上传者：</dt>
+                    <dd>
+                        <input type="text" name="uploadName" />
+                    </dd>
                 </dl>
             </fieldset>
 

@@ -9,6 +9,12 @@
 .ke-clearfix {
 	zoom: 1;
 }
+.myEditor p{
+	height: auto;
+	width: 700px;
+	margin: 0px 0px;
+	padding: 0px 0px;
+}
 .ke-clearfix:after {
 	content: ".";
 	display: block;

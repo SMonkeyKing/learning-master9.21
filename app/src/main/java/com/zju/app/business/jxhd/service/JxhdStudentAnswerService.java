@@ -37,6 +37,11 @@ public class JxhdStudentAnswerService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public void saveList(List<JxhdStudentAnswerDO> list)
+    {
+        jxhdStudentAnswerRepos.save(list);
+    }
+
     public void save(JxhdStudentAnswerDO jxhdStudentAnswerDO)
     {
         jxhdStudentAnswerRepos.save(jxhdStudentAnswerDO);
@@ -81,7 +86,7 @@ public class JxhdStudentAnswerService {
                 "sum(case when answer='D' then 1 else 0 end) as answerD,\n" +
                 "sum(case when correct=1 then 1 else 0 end) as correct,\n" +
                 "1 as rate "+
-                "from learning.jxhd_student_answer where question_type=1\n" +
+                "from jxhd_student_answer where question_type=1\n" +
                 "group by paper_id";
         Query query = entityManager.createNativeQuery(sql);
         query.unwrap(SQLQuery.class)
@@ -106,7 +111,7 @@ public class JxhdStudentAnswerService {
     //获取填空综合题题号和答题人数
     public List<CompositeQuestionAnswerDO> getCompositeQuestionAnswer()
     {
-        String sql = "SELECT paper_id as paper_id,count(*) as num FROM learning.jxhd_student_answer " +
+        String sql = "SELECT paper_id as paper_id,count(*) as num FROM jxhd_student_answer " +
                 "where question_type >1 group by paper_id";
         Query query = entityManager.createNativeQuery(sql);
         query.unwrap(SQLQuery.class)

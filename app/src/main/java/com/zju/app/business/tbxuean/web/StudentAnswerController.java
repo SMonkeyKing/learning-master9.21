@@ -134,6 +134,7 @@ public class StudentAnswerController {
         SyncTestDO syncTestDOBack = syncTestService.findOne(testId);
         List<PaperTestQuestionDO> paperTestQuestionDOS = paperTestService.findAllByPaperId(testId);
         model.put("tkjsAnswer",syncTestDOBack.getAnswer());
+        model.put("answerUrl",syncTestDOBack.getAnswerName());
         model.put("paperTestQuestionDOS",paperTestQuestionDOS);
         return "/syncLearningPlan/stuAnswerResult";
     }

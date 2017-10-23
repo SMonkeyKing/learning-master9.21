@@ -5,7 +5,7 @@ spring:
       max-file-size: 2097152MB
       max-request-size: 2097152MB
   datasource:
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/learning?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/learning_math?useUnicode=true&characterEncoding=utf-8
     username: root
     password: zlj@123
     driver-class-name: net.sf.log4jdbc.DriverSpy
@@ -16,6 +16,11 @@ spring:
       ddl-auto: none
   profiles:
     active: xu
+
+  mvc:
+    favicon:
+      enabled: false
+
 
 
 
@@ -37,5 +42,32 @@ context:
 login:
   username: admin
   password: admin
-  excludes: /,/index,/loginIndex,/error/**
+  excludes: /,/index,/loginIndex,/error/**,/phone/**
   loginInEntry: /learning/
+
+
+quartz.enabled: true
+
+jobs:
+  joblist[0]:
+    jobName: DemoJob
+    runFlag: true
+    concurrent: false
+    #10s执行一次
+    triggerCronExpression: 0/10 * * * * ?
+    jobClass: com.zju.app.job.DemoJob
+    jobClassRunMethod: run
+    singleFlag: true
+    singleJobTime: 60000000
+  joblist[1]:
+    jobName: DemoJob
+    runFlag: false
+    concurrent: false
+    #10s执行一次
+    triggerCronExpression: 0/30 * * * * ?
+    jobClass: com.zju.app.job.DemoJob
+    jobClassRunMethod: run
+    singleFlag: true
+    singleJobTime: 60000000
+
+

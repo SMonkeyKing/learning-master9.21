@@ -49,7 +49,9 @@
             <th width="200"><b>名称</b></th>
             <th width="60"><b>上传者</b></th>
             <th width="70"><b>上传时间</b></th>
+            <#if (role<2)>
             <th width="150"><b>操作</b></th>
+            </#if>
         </tr>
         </thead>
         <tbody>
@@ -61,19 +63,19 @@
                 <#--<td><embed src="${courseWare.url!}">${courseWare.name!}</embed></td>-->
                 <td>${courseWare.uploadName!}</td>
                 <td>${courseWare.dateCreated!}</td>
-
+                <#if (role<2)>
                 <td>
 
                     <!-- 下载 -->
                     <a style="color:blue" href="${courseWare.url!}">下载</a>
-                    <#if (role<2)>
+
                     <!-- 修改 -->
-                    <a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}&typeid=${courseWare.typeid}" target="navTab">修改</a>
+                    <#--<a  style="color:blue" href="${ctx}/courseWare/prepareUpdate?id=${courseWare.id}&typeid=${courseWare.typeid}" target="navTab">修改</a>-->
                     <!-- 作废 -->
                     <a style="color:blue" href="${ctx}/courseWare/delete?id=${courseWare.id}" target="ajaxTodo" title="温馨提示：是否确认删除" >删除</a>
-                    </#if>
-                </td>
 
+                </td>
+                </#if>
             </tr>
             </#list>
         <#else>

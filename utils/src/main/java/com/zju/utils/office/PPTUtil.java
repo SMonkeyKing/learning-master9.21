@@ -61,7 +61,8 @@ public class PPTUtil {
                     String filename = HtmlUtil.FILE_DIR + uuid + "\\" + (i + 1) + ".jpg";
                     html
                             .append("<div style=\"text-align:center\"><img src=\"")
-                            .append(filename)
+                            //.append(filename)
+                            .append(HtmlUtil.NGINX_DIR+uuid+"/"+(i + 1) + ".jpg")
                             .append("\"></div>");
                     FileOutputStream out = new FileOutputStream(filename);
                     ImageIO.write(img, "png", out);

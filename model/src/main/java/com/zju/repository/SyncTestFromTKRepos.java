@@ -16,6 +16,6 @@ public interface SyncTestFromTKRepos extends JpaRepository<SyncTestFromTKDO,Inte
     public SyncTestFromTKDO selectByQuestionId(Integer qId);
 
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE SyncTestFromTKDO SET stuAns = '' where typeId = ?1")
+    @Query("UPDATE SyncTestFromTKDO SET stuAns = '' where learningPlanId = ?1")
     public void updateStuAns(Integer typeid);
 }

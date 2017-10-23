@@ -25,11 +25,13 @@ public class JxhdStudentAnswerDO extends BaseDomain {
 
     private String username;
 
+    //如果是拍照上传的，就是图片String
     private String answer;
 
     @Column(name = "correct_answer")
     private String correctAnswer;
 
+    //用于标识是正确，还是错误
     private Integer correct;
 
     @Column(name = "question_type")

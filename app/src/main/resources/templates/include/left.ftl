@@ -34,7 +34,7 @@
                                     <#list level3menus as level3>
 
                                        <li>
-                                           <a <#if level3.getUrl()??>href="${ctx}${level3.getUrl()!}<#if level3.paramsid??>?typeid=${level3.getParamsid()!}</#if>" target="navTab" rel="${level3.getTitle()!}"</#if>>${level3.getTitle()}</a>
+                                           <a <#if level3.getUrl()??>href="${ctx}${level3.getUrl()!}<#if level3.paramsid??>?typeid=${level3.getParamsid()!}<#else >?typeid=${level3.getId()!}</#if>" target="navTab" rel="${level3.getTitle()!}"</#if>>${level3.getTitle()}</a>
                                            <#--<a href="<#if level3.getUrl()??>${ctx}${level3.getUrl()}<#else >javascript:void(0)</#if>" target="navTab" rel="${level3.getTitle()}">${level3.getTitle()}</a>-->
                                         <ul>
                                         <#assign level4menus = level3.getSubmenus()/>

@@ -8,6 +8,8 @@
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="${c_static}/dwz/css/style.css" media="all" />
+    <link href="${c_static}/dwz/favicon.ico" rel="icon"  type="image/x-icon" />
+    <link href="${c_static}/dwz/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <!--[if IE]><link rel="stylesheet" href="css/ie.css" media="all" /><![endif]-->
 </head>
 <body class="login">
@@ -22,7 +24,7 @@
     </form>
     <#--<p><a href="#">Forgot your password?</a></p>-->
 </section>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<#--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>-->
 <script type="text/javascript">
     // Page load delay by Curtis Henson - http://curtishenson.com/articles/quick-tip-delay-page-loading-with-jquery/
     $(function(){

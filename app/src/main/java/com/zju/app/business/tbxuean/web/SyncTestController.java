@@ -7,6 +7,7 @@ import com.zju.app.business.tbxuean.service.StudentAnswerService;
 import com.zju.app.business.tbxuean.service.SyncTestFromTKService;
 import com.zju.app.business.tbxuean.service.SyncTestService;
 import com.zju.app.bussiness.jxkj.service.CourseWareService;
+import com.zju.app.constant.Constants;
 import com.zju.model.*;
 import com.zju.utils.Lang;
 import com.zju.utils.dwz.AjaxResponseVo;
@@ -283,11 +284,11 @@ public class SyncTestController {
     {
 
         SyncTestDO syncTestDO = syncTestService.findOne(id);
-        Integer lpId = syncTestDO.getTypeid();
-        CourseWareDO courseWareDO = courseWareService.findOne(lpId);
-        String lpName = courseWareDO.getName();
-        String pdfUrl = courseWareDO.getUrl();
-        model.put("lpName",lpName);
+        //Integer lpId = syncTestDO.getTypeid();
+        //CourseWareDO courseWareDO = courseWareService.findOne(lpId);
+        //String lpName = courseWareDO.getName();
+        //String pdfUrl = courseWareDO.getUrl();
+        //model.put("lpName",lpName);
         model.put("syncTestDO",syncTestDO);
         /*model.put("lpId",lpId);
         model.put("pdfUrl",pdfUrl);
@@ -310,7 +311,39 @@ public class SyncTestController {
                 "操作成功", tabName, AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
 
         try {
-            Thread thread = new Thread()
+            SyncTestDO syncTestDO = new SyncTestDO();
+            //上传题目
+            if (file1 != null) {
+                String oldname1 = file1.getOriginalFilename();
+                syncTestDO.setName(oldname1);
+                String suffixName = file1.getOriginalFilename().substring(file1.getOriginalFilename().lastIndexOf("."));
+
+                //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
+                String newFileName1 = Constants.FILE_ROAD_KEY + oldname1;
+                //System.out.print("0000000" + newFileName);
+                FileCopyUtils.copy(file1.getBytes(), new File(newFileName1));
+                String url1 = Constants.NGINX_ROAD_KEY+ oldname1;
+                syncTestDO.setUrl(url1);
+
+            }
+            syncTestDO.setTypeid(id);
+            syncTestDO.setXztNum(xztNum);
+            //上传答案
+            if (file2.getSize()>0 ||file2 != null  ) {
+                String oldname2 = file2.getOriginalFilename();
+                syncTestDO.setAnswerName(oldname2);
+                //String suffixName = file2.getOriginalFilename().substring(file2.getOriginalFilename().lastIndexOf("."));
+
+                //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
+                String newFileName2 =Constants.FILE_ROAD_KEY + oldname2;
+                //System.out.print("0000000" + newFileName);
+                FileCopyUtils.copy(file2.getBytes(), new File(newFileName2));
+                String url2 = Constants.NGINX_ROAD_KEY + oldname2;
+                syncTestDO.setAnswerUrl(url2);
+            }
+
+            syncTestService.save(syncTestDO);
+            /*Thread thread = new Thread()
             {
                 public void run(){
                     try {
@@ -355,11 +388,11 @@ public class SyncTestController {
             };
             thread.start();
             //保证上面的线程先执行完
-            thread.join();
+            thread.join();*/
             //找到最新插入的试卷的id
-            SyncTestDO syncTestDO = syncTestService.findLatest();
+            SyncTestDO syncTestDO1 = syncTestService.findLatest();
 
-            Integer paperId = syncTestDO.getId();
+            Integer paperId = syncTestDO1.getId();
 
             //把选择题答案存进paper_test_question表
             for (int i=1;i<=xztNum;i++)
@@ -381,23 +414,23 @@ public class SyncTestController {
         return ajaxResponseVo;
     }
 
-    /*@RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo delete(SyncTestDO syncTestDO) {
-        Integer typeId = courseWare.getTypeid();
+        Integer typeId = syncTestDO.getTypeid();
         LeftMenuDO leftMenuDO = leftMenuService.findOne(typeId);
         String typeName = leftMenuDO.getTitle();
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
                 "已经作废", typeName);
         try {
-            logger.info("0000000000000"+courseWare.getName()+courseWare.getUrl());
-            courseWare.setDeleteFlag(true);
-            courseWareService.save(courseWare);
+            logger.info("0000000000000");
+            syncTestDO.setDeleteFlag(true);
+            syncTestService.save(syncTestDO);
         } catch (Exception e) {
             logger.error("删除课件失败:{}", e.getMessage());
             ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
             ajaxResponseVo.setMessage("操作失败!");
         }
         return ajaxResponseVo;
-    }*/
+    }
 }

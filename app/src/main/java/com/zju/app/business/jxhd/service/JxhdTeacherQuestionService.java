@@ -52,4 +52,8 @@ public class JxhdTeacherQuestionService {
         return jxhdTeacherQuestionRepos.findOne(id);
     }
 
+    public void delete(Integer id)
+    {
+        jxhdTeacherQuestionRepos.delete(id);
+    }
 }

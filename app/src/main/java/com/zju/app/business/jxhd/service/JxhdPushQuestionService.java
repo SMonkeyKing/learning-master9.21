@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,6 +21,7 @@ import java.util.List;
  * Created by lujie on 2017/9/11.
  */
 @Service
+@Transactional
 public class JxhdPushQuestionService {
 
     @Autowired
@@ -30,6 +32,15 @@ public class JxhdPushQuestionService {
         jxhdPushQuestionRepos.save(jxhdPushQuestionDO);
     }
 
+    public void delete(String date)
+    {
+        jxhdPushQuestionRepos.delete(date);
+    }
+
+    public void deletePushQuestion(Integer id)
+    {
+        jxhdPushQuestionRepos.delete(id);
+    }
     //查推送表中的数据
     public List<JxhdPushQuestionDO> findAll()
     {

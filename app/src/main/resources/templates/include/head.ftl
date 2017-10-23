@@ -3,6 +3,8 @@
 <link href="${c_static}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 <link href="${c_static}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${c_static}/dwz/css/default.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="${c_static}/dwz/favicon.ico" rel="icon"  type="image/x-icon" />
+<link href="${c_static}/dwz/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 <!--[if IE]>
 <link href="themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
 
@@ -23,7 +25,6 @@
 <script src="${c_static}/dwz/js/editor/ueditor.all.min.js" type="text/javascript"></script>
 <script src="${c_static}/dwz/js/editor/ueditor.config.js" type="text/javascript"></script>
 <script src="${c_static}/dwz/js/pdfobject.js" type="text/javascript"></script>
-<script src="${c_static}/dwz/js/kindeditor-all.js" type="text/javascript"></script>
 <!--<script src="${c_static}/dwz/xheditor/xheditor-1.2.2.min.js" type="text/javascript"></script>-->
 
 <script type="text/javascript">

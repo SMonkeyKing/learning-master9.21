@@ -48,8 +48,9 @@ public class SyncTestFromTKController {
         }
     }
     //通过点击左侧菜单进入添加同步测试题列表
+    //pId 学案的id
     @RequestMapping(value = {"/config"})
-    public String addSyncTestFromTK(@RequestParam(name = "id") Integer id, HttpServletRequest request,
+    public String addSyncTestFromTK(@RequestParam(name = "pid") Integer id, HttpServletRequest request,
                                     QuestionDO questionDO, DwzPageVo page, Map model)
     {
         Integer typeid = Integer.parseInt(request.getParameter("typeid"));
@@ -78,29 +79,34 @@ public class SyncTestFromTKController {
                                @RequestParam(name = "learningPlanId")Integer learingPlanId)
     {
         try{
-
             QuestionDO questionDO = questionService.findOne(questionId);
-            questionDO.setVersion(2);
+            //如果已经加入同步测试，把题库中的sync_flag置为1
+            questionDO.setSyncFlag(1);
             questionService.save(questionDO);
             SyncTestFromTKDO syncTestFromTKDO = new SyncTestFromTKDO();
             syncTestFromTKDO.setQuestionContent(questionDO.getContent());
             Integer questionType = questionDO.getType();
             syncTestFromTKDO.setQuestionType(questionType);
-            //questionType==1表示选择题
-            if(questionType==1)
+            //questionType = 1表示是选择题
+            if(questionType == 1)
             {
                 syncTestFromTKDO.setQuestionAnswer(questionDO.getJudgeAnswer());
+            }else
+            {
+                syncTestFromTKDO.setQuestionAnswer(questionDO.getAnswer());
             }
-            syncTestFromTKDO.setQuestionAnswer(questionDO.getAnswer());
-            //typeid左侧菜单的id，为了列表显示时过滤出同一专题下的题目
-            syncTestFromTKDO.setTypeId(learingPlanId);
+
+            //syncTestFromTKDO.setQuestionAnswer(questionDO.getAnswer());
+            //learingPlanId为学案id，用于过滤改学案下的同步测试
+            syncTestFromTKDO.setLearningPlanId(learingPlanId);
+            //syncTestFromTKDO.setTypeId(learingPlanId);
+            
             syncTestFromTKDO.setQuestionId(questionDO.getId());
             syncTestFromTKService.save(syncTestFromTKDO);
             return 1;
         }catch (Exception e)
         {
             e.printStackTrace();
-
         }
         return 0;
     }

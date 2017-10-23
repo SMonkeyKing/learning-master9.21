@@ -49,6 +49,21 @@ public class Lang {
 	 */
 	public final static Object[] EMPTY_ARRAY = new Object[] {};
 
+	public static long getDateMinutesDiff(Date endDate, Date nowDate) {
+
+		long nd = 1000 * 24 * 60 * 60;
+		long nh = 1000 * 60 * 60;
+		long nm = 1000 * 60;
+		// long ns = 1000;
+		// 获得两个时间的毫秒时间差异
+		long diff = endDate.getTime() - nowDate.getTime();
+		// 计算差多少分钟
+		long min = diff % nd % nh / nm;
+		// 计算差多少秒//输出结果
+		// long sec = diff % nd % nh % nm / ns;
+		return min;
+	}
+
 	public static String formattedDecimalToPercentage(double decimal)
 	{
 		//获取格式化对象

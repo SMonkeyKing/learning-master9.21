@@ -1,3 +1,11 @@
+<style>
+    .myEditor p{
+        height: auto;
+        width: 750px;
+        margin: 0px 0px;
+        padding: 2px 0px;
+    }
+</style>
 <script>
     jQuery(document).ready(function()
     {

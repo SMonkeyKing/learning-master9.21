@@ -3,6 +3,7 @@ package com.zju.app.business.jxhd.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zju.app.business.jxhd.service.*;
+import com.zju.app.constant.Constants;
 import com.zju.model.*;
 import com.zju.utils.IDUtils;
 import com.zju.utils.Lang;
@@ -29,9 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by lujie on 2017/8/25.
- */
 @Controller
 @RequestMapping("/jxhd")
 public class JxhdQuestionController {
@@ -95,6 +93,7 @@ public class JxhdQuestionController {
         //model.put("type", type);
         return "/jxhd/paperList";
     }
+
 
     //用于获取填空选择题学生作答情况的列表
     //学生上传的是图片
@@ -283,14 +282,14 @@ public class JxhdQuestionController {
         String newName = IDUtils.genImageName()+suffix;
         String path = request.getContextPath();
         //String basepath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-        String basepath = "http://localhost:80/file/";
+        String basepath = Constants.NGINX_ROAD_KEY;
         System.out.print("path"+basepath);
         //String realPath = request.getServletContext().getRealPath("/");
         String realPath = ClassUtils.getDefaultClassLoader().getResource("").getPath();
 
         String path1 = "C:/Users/lujie/Desktop/learning-master/learning-master/imgfile/";
         //String path2 = "C:\\Users\\lujie\\Desktop\\learning-master\\learning-master\\imgfile\\";
-        String path3 = "D:\\work\\file\\";
+        String path3 = Constants.FILE_ROAD_KEY;
         System.out.print("realPath"+realPath);
         File file = new File(path3+newName);
         file.createNewFile();
@@ -321,10 +320,10 @@ public class JxhdQuestionController {
                     String suffixName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 
                     //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
-                    String newFileName = "D:\\work\\courseWare\\" + oldname;
+                    String newFileName = Constants.FILE_ROAD_KEY + oldname;
                     System.out.print("0000000"+newFileName);
                     FileCopyUtils.copy(file.getBytes(), new File(newFileName));
-                    String url = "http://localhost/courseWare/"+oldname;
+                    String url = Constants.NGINX_ROAD_KEY+oldname;
                     jxhdQuestionDO.setPaperUrl(url);
                     jxhdQuestionDO.setUploadName(uploadName);
                     jxhdQuestionDO.setCategory(1);
@@ -342,6 +341,20 @@ public class JxhdQuestionController {
         return ajaxResponseVo;
     }
 
+    @RequestMapping(value = {"/question/delete"}, method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResponseVo deleteQuestion(@RequestParam(name = "qid")Integer qid) {
+        AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
+                "已经作废", "上传题目");
+        try {
+            jxhdTeacherQuestionService.delete(qid);
+        } catch (Exception e) {
+            logger.error("删除题目失败:{}", e.getMessage());
+            ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
+            ajaxResponseVo.setMessage("操作失败!");
+        }
+        return ajaxResponseVo;
+    }
     @RequestMapping(value = {"/paper/delete"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo delete(JxhdQuestionDO jxhdQuestionDO) {
@@ -501,8 +514,8 @@ public class JxhdQuestionController {
         Date now=new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String fileName=dateFormat.format(now)+".html";
-        String filePathContent = "D:\\work\\question\\"+"content"+fileName;
-        String contentUrl = "http://localhost/question/"+"content"+fileName;
+        String filePathContent = Constants.FILE_ROAD_KEY+"content"+fileName;
+        String contentUrl = Constants.NGINX_ROAD_KEY+"content"+fileName;
 
        /* String filePathAnswer = "D:\\work\\question\\"+"answer"+fileName;
         String contentAnswer = "http://localhost/question/"+"answer"+fileName;*/

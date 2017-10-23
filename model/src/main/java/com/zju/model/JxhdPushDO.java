@@ -1,6 +1,7 @@
 package com.zju.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by lujie on 2017/8/25.
@@ -39,6 +40,8 @@ public class JxhdPushDO{
 
     //1-试卷 2-题目
     private  Integer category;
+
+
 
     public Integer getId() {
         return id;
@@ -119,4 +122,6 @@ public class JxhdPushDO{
     public void setCategory(Integer category) {
         this.category = category;
     }
+
+
 }

@@ -42,4 +42,18 @@ public class TbxaLearningPlanService {
         return tbxaLearningPlanRepos.findOne(id);
     }
 
+    public void saveList(List<TbxaLearningPlanDO> tbxaLearningPlanDOS)
+    {
+         tbxaLearningPlanRepos.save(tbxaLearningPlanDOS);
+    }
+
+    public void save(TbxaLearningPlanDO tbxaLearningPlanDO)
+    {
+        tbxaLearningPlanRepos.save(tbxaLearningPlanDO);
+    }
+
+    public void delete(Integer id)
+    {
+        tbxaLearningPlanRepos.delete(id);
+    }
 }

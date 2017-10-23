@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -141,7 +142,7 @@ public class PaperController {
     }
 
     //从cookie中取出题号，生成试卷
-    @RequestMapping(value = {"/save"})
+    @RequestMapping(value = {"/save"},method = RequestMethod.POST)
     public AjaxResponseVo save(HttpServletRequest request, HttpServletResponse response) {
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo(AjaxResponseVo.STATUS_CODE_SUCCESS,
                 "操作成功", "生成试卷", AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);

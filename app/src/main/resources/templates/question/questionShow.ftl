@@ -5,6 +5,16 @@
         /*border:1px solid #B3E4EB;*/
     }
 </style>
+
+<!--
+如果您使用的是高版本jQuery调用下面jQuery迁移辅助插件即可-->
+<script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script language="javascript" src="${c_static}/dwz/js/jquery.jqprint-0.3.js"></script>
+<script>
+    function printPage(){
+        $("#questionShowDiv").jqprint();
+    }
+</script>
 <div  class="pageContent">
     <div class="accordionContent" layoutH="62">
         <div id ="questionShowDiv">
@@ -46,12 +56,12 @@
     </div>
 
 <div class="top"></div>
-<script>
+<#--<script>
 function printPage(){
-var body = window.document.body.innerHTML;
+//var body = window.document.body.innerHTML;
 var printHtml = $("#questionShowDiv").html();
 window.document.body.innerHTML=printHtml;
 window.print();
-window.document.body.innerHTML=body;
+//window.document.body.innerHTML=body;
 }
-</script>
+</script>-->

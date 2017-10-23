@@ -91,8 +91,9 @@ public class SelfTestController {
             if(questionType==1)
             {
                 unitTestFromTKDO.setQuestionAnswer(questionDO.getJudgeAnswer());
+            }else{
+                unitTestFromTKDO.setQuestionAnswer(questionDO.getAnswer());
             }
-            unitTestFromTKDO.setQuestionAnswer(questionDO.getAnswer());
             //typeid左侧菜单的id，为了列表显示时过滤出同一专题下的题目
             unitTestFromTKDO.setTypeId(questionDO.getTypeid());
             unitTestFromTKDO.setQuestionId(questionDO.getId());

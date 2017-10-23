@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zju.app.business.stjj.service.LeftMenuService;
 import com.zju.app.business.stjj.service.QuestionService;
+import com.zju.app.constant.Constants;
 import com.zju.model.LeftMenuDO;
 import com.zju.model.QuestionDO;
 import com.zju.utils.IDUtils;
@@ -29,9 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-/**
- * Created by lujie on 2017/8/13.
- */
 @Controller
 @RequestMapping("/question")
 public class QuestionController {
@@ -148,6 +146,11 @@ public class QuestionController {
             questionDO.setContent(content);
             questionDO.setAnswer(answer);
             questionDO.setJudgeAnswer(judgeAnswer);
+            questionDO.setSyncFlag(0);
+            questionDO.setUnitFlag(0);
+            questionDO.setCorrectNum(0);
+            questionDO.setAnsNum(0);
+            questionDO.setCorrectRate("0.00%");
             questionService.save(questionDO);
         }catch (Exception e) {
             ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
@@ -179,14 +182,11 @@ public class QuestionController {
         String newName = IDUtils.genImageName()+suffix;
         String path = request.getContextPath();
         //String basepath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-        String basepath = "http://localhost:80/file/";
+        String basepath = Constants.NGINX_ROAD_KEY;
         System.out.print("path"+basepath);
         //String realPath = request.getServletContext().getRealPath("/");
         String realPath = ClassUtils.getDefaultClassLoader().getResource("").getPath();
-
-        String path1 = "C:/Users/lujie/Desktop/learning-master/learning-master/imgfile/";
-        //String path2 = "C:\\Users\\lujie\\Desktop\\learning-master\\learning-master\\imgfile\\";
-        String path3 = "D:\\work\\file\\";
+        String path3 = Constants.FILE_ROAD_KEY;
         System.out.print("realPath"+realPath);
         File file = new File(path3+newName);
         file.createNewFile();

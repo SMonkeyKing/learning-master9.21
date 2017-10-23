@@ -2,6 +2,7 @@ package com.zju.app.bussiness.jxkj.web;
 
 import com.zju.app.business.stjj.service.LeftMenuService;
 import com.zju.app.bussiness.jxkj.service.CourseWareService;
+import com.zju.app.constant.Constants;
 import com.zju.model.CourseWareDO;
 import com.zju.model.LeftMenuDO;
 import com.zju.utils.Lang;
@@ -63,19 +64,6 @@ public class CourseWareController {
         return "/courseWare/list";
     }
 
-    @RequestMapping(value = {"/video/config"})
-    public String videoList(@RequestParam(name = "typeid")Integer id, CourseWareDO courseWare, DwzPageVo page, Map model, HttpServletRequest request) {
-        Page<CourseWareDO> pageLists = courseWareService.findAll(id,courseWare, page.getPageable());
-        page.setTotalCount(pageLists.getTotalElements());
-        model.put("courseWare", courseWare);
-        model.put("page", page);
-        model.put("courseWares", pageLists.getContent());
-        //把菜单的id传到前端
-        model.put("typeid",id);
-        Integer roleId = (Integer) request.getSession().getAttribute("role");
-        model.put("role",roleId);
-        return "/courseWare/videoList";
-    }
 
     @RequestMapping(value = {"/prepareAdd"})
     public String prepareAdd(@RequestParam(name = "typeid")String id,Map model)
@@ -90,12 +78,6 @@ public class CourseWareController {
         return "/courseWare/update";
     }
 
-    @RequestMapping(value = {"/playVideo"})
-    public String playVideo(@RequestParam(name = "url")String url,Map model)
-    {
-        model.put("videoUrl",url);
-        return "/playVideo";
-    }
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseVo save(@RequestParam(name = "file") MultipartFile[] files,
@@ -116,10 +98,9 @@ public class CourseWareController {
                     String suffixName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 
                     //String newFileName = "C:\\file\\" + UUID.randomUUID().toString() + suffixName;
-                    String newFileName = "D:\\work\\courseWare\\" + oldname;
-                    System.out.print("0000000"+newFileName);
+                    String newFileName = Constants.FILE_ROAD_KEY + oldname;
                     FileCopyUtils.copy(file.getBytes(), new File(newFileName));
-                    String url = "http://localhost/courseWare/"+oldname;
+                    String url = Constants.NGINX_ROAD_KEY+oldname;
                     courseWare.setUrl(url);
                     courseWare.setTypeid(id);
                     courseWare.setUploadName(uploadName);

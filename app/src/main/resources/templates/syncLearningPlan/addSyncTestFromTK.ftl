@@ -22,7 +22,7 @@
     }
 </style>
 
-<form id="pagerForm" method="post" action="${ctx}/syncTestFromTK/config?typeid=${typeid}">
+<form id="pagerForm" method="post" action="${ctx}/syncTestFromTK/config?pid=${learningPlanId}&typeid=${typeid}">
     <input type="hidden" name="pageNum" value="${page.currentPage!}"/>
     <input type="hidden" name="numPerPage" value="${page.numPerPage!}"/>
     <input type="hidden" name="orderBy" value="desc">
@@ -62,12 +62,11 @@
             </div>
             <div class="panelBar">
                 <ul class="toolBar">
-                    <#if questionDO.getVersion() == 1>
-                        <li style="float: right"><a class="add" href="javascript:void(0)" id="add${questionDO.getId()}" name="add${questionDO.getId()}" onclick="addToSyncTest(${questionDO.getId()},${learningPlanId});" ><span id="add">加入同步测试</span></a></li>
-                    <#else >
+                    <#if questionDO.getSyncFlag() == 1>
                         <li style="float: right;color: grey"><a href="javascript:return false;" onclick="return false;" ><span id="add" style="color: #CCC;">已加入同步测试</span></a></li>
+                    <#else >
+                        <li style="float: right"><a class="add" href="javascript:void(0)" id="add${questionDO.getId()}" name="add${questionDO.getId()}" onclick="addToSyncTest(${questionDO.getId()},${learningPlanId});" ><span id="add">加入同步测试</span></a></li>
                     </#if>
-                <#--<li style="float: right"><a class="add" href="${ctx}/paper/addCookies?questionId=${questionDO.getId()!}" ><span>加入试卷</span></a></li>-->
                 </ul>
             </div>
             <div style="display:none;" class="panelContent" >
@@ -124,8 +123,7 @@
     });
 
     function  addToSyncTest(id,lid) {
-        alert(id);
-        alert(lid);
+
         /*var add = document.getElementsById("add");
         add.innerHTML = "已加入试卷"
         add.disabled = true;
@@ -141,7 +139,7 @@
             data: {'questionId': id,'learningPlanId': lid},
             context: document.getElementsByName("add"+id),
             success: function (data) {
-                alert(11111);
+
                 //alert(data);
                 if (data == 1) {
                     $(this).css("color", "#CCC");

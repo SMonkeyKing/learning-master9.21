@@ -29,7 +29,8 @@
                     <dt>填空计算题答案：</dt>
                     <dd>
                         <div >
-                            <input type="text" name="" readonly="true" value="${tkjsAnswer}"/>
+                            <textarea style="height: 300px;width: 800px;"readonly="true" value="${tkjsAnswer}">${tkjsAnswer}</textarea>
+                            <#--<input type="text" style="height: 300px" name="" readonly="true" value="${tkjsAnswer}"/>-->
                         </div>
                     </dd>
                 </dl>
@@ -37,7 +38,8 @@
                     <dt>参考答案：</dt>
                     <dd>
                         <div >
-                            <input type="button" name="" value="点击查看"/>
+                            <#--<input type="button" name="" value="点击查看" onclick="javascript:window.location.href='${answerUrl}' var open_blank_default = ture;"/>-->
+                            <input type="button" name="" value="点击查看" onclick="window.open('${ctx}/office?path=${answerUrl}')"/>
                         </div>
                     </dd>
                 </dl>

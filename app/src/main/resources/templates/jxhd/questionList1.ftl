@@ -103,13 +103,16 @@
                     </div>
                     <div class="panelBar">
                         <ul class="toolBar">
-                            <li style="float: left"><a class="edit" href="${ctx}/jxhd/question/prepareUpdate?id=${jxhdQuestionDO.getId()}" target="navTab" ><span>编辑</span></a></li>
+                            <#--<li style="float: left"><a class="edit" href="${ctx}/jxhd/question/prepareUpdate?id=${jxhdQuestionDO.getId()}" target="navTab" ><span>编辑</span></a></li>-->
                             <#if jxhdQuestionDO.version == 1>
-                                <li style="float: right"><a class="add" style="color: red" name="push${jxhdQuestionDO.getId()}" href="javascript:void(0)"  onclick="pushQuestion(${jxhdQuestionDO.getId()});" ><span>推送</span></a></li>
+                                <li style="float: right"><a class="add" style="color: red" name="push${jxhdQuestionDO.getId()}" onclick="pushQuestion(${jxhdQuestionDO.getId()});" ><span>推送</span></a></li>
                             <#else >
-                                <li style="float: right"><a class="add" style="color: grey" name="push${jxhdQuestionDO.getId()}" href="javascript:void(0)" ><span>推送</span></a></li>
+                                <li style="float: right"><a class="add" style="color: grey" name="push${jxhdQuestionDO.getId()}" href="javascript:void(0)" ><span>已推送</span></a></li>
                             </#if>
                             <li style="float: right"><a class="add" style="color: black"  href="javascript:void(0)"  onclick="getParsing(${jxhdQuestionDO.getId()});" ><span>查看解析</span></a></li>
+                                <li style="float: right">
+                                    <a class="delete"  href="${ctx}/jxhd/question/delete?qid=${jxhdQuestionDO.id}" target="ajaxTodo" title="温馨提示：是否确认删除"  ><span id="delete">删除</span></a>
+                                </li>
                         </ul>
                     </div>
                     <div style="display: none;" class="panelContent" id="parsing${jxhdQuestionDO.id!}" name="parsing${jxhdQuestionDO.id!}">
@@ -169,10 +172,6 @@
     });
 
     function pushQuestion(id) {
-        /*$.getJSON("${ctx}/jxhd/push?id="+id,function () {
-            //alert("加入成功");
-            $("#push").css("color","#CCC");
-        });*/
         $.ajax({
             url: "${ctx}/jxhd/question/push?id="+id,
             context: document.getElementsByName("push"+id),

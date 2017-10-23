@@ -18,9 +18,12 @@ public class GlobalErrorHandler {
     public AjaxResponseVo ajaxOvertime()
     {
         AjaxResponseVo ajaxResponseVo = new AjaxResponseVo();
-        ajaxResponseVo.setCallbackType(null);
+        //ajaxResponseVo.setCallbackType(AjaxResponseVo.CALLBACK_TYPE_FORWARD);
         ajaxResponseVo.setMessage("登录超时,请重新登录！");
         ajaxResponseVo.setStatusCode(AjaxResponseVo.STATUS_CODE_ERROR);
+
+        ajaxResponseVo.setCallbackType(AjaxResponseVo.CALLBACK_TYPE_CLOSE_CURRENT);
+        ajaxResponseVo.setForwardUrl("http://localhost:8080/learning");
         return ajaxResponseVo;
 
     }

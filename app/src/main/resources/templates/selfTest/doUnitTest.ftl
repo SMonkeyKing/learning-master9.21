@@ -36,7 +36,7 @@
         <div class="formBar">
             <ul>
                 <li style="text-align: center"><div class="buttonActive"><div class="buttonContent"><button  type="submit" ">提交答案</button></div></div></li>
-                <li><a class="buttonActive"  id = "gen" href="${ctx}/unitTest/backResult?typeid=${typeid}" target="navTab"><span>查看测试结果</span></a></li>
+                <#--<li><a class="buttonActive"  id = "gen" href="${ctx}/unitTest/backResult?typeid=${typeid}" target="navTab"><span>查看测试结果</span></a></li>-->
             </ul>
         </div>
         <div class="accordionContent" layoutH="47">

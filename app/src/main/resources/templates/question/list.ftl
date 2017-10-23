@@ -31,23 +31,6 @@
 </form>
 
 <div class="pageHeader">
-    <#--<div id="sidebar" >
-        <div class="accordion" fillSpace="sidebar" >
-            <div class="accordionHeader">
-                <h2><span>Folder</span>教学管理平台</h2>
-            </div>
-            <div class="accordionContent" >
-                <ul class="tree treeFolder">
-                    <li><a href="javascript:void(0)" >专题1</a></li>
-                    <ul>
-                        <li><a href="javascript:void(0)" >章节1</a></li>
-                        <li><a href="javascript:void(0)" >章节2</a></li>
-                        <li><a href="javascript:void(0)" >章节3</a></li>
-                    </ul>
-                </ul>
-            </div>
-        </div>
-    </div>-->
     <form id="questionForm" onsubmit="return navTabSearch(this);" action="${ctx}/question/config" class="required-validate" method="post">
         <div class="searchBar">
 
@@ -66,38 +49,19 @@
                     &lt;#&ndash;<td><button style="float: right">查看试题篮</button></td>&ndash;&gt;
                 </tr>-->
             </table>
-
-            <#--<div class="subBar">
-                <ul>
-                    <li>
-                        <div class="buttonActive add">
-                            <div class="buttonContent">
-                                <button onclick="addAllToPaper()">全部加入试卷</button>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="buttonActive add">
-                            <div class="buttonContent">
-                                <button onclick="addAllToPaper()">全部加入试卷</button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>-->
         </div>
     </form>
         <div class="subBar">
             <ul>
-                <li>
+                <#--<li>
                     <div>
                         <div class="buttonContent" style="float: right;">
                             <button onclick="addAllToPaper()">全部加入试卷</button>
                             <span>&nbsp;&nbsp;</span>
-                            <#--<button><a href="${ctx}/paper/paperBasket" target="dialog" ></a></button>-->
+                            &lt;#&ndash;<button><a href="${ctx}/paper/paperBasket" target="dialog" ></a></button>&ndash;&gt;
                         </div>
                     </div>
-                </li>
+                </li>-->
 
                 <li >
                     <div>
@@ -140,7 +104,7 @@
                     </div>
                     <div class="panelBar">
                         <ul class="toolBar">
-                            <li style="float: left"><a class="edit" href="${ctx}/question/prepareUpdate?id=${questionDO.getId()}" target="navTab" ><span>编辑</span></a></li>
+                            <#--<li style="float: left"><a class="edit" href="${ctx}/question/prepareUpdate?id=${questionDO.getId()}" target="navTab" ><span>编辑</span></a></li>-->
                             <li style="float: right"><a class="add" href="javascript:void(0)" name="add${questionDO.getId()}"onclick="addToPaper(${questionDO.getId()});" ><span id="add">加入试卷</span></a></li>
                             <#if questionDO.type == 1 >
                                 <#--只有选择题显示正确率-->

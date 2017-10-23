@@ -13,6 +13,11 @@
     </form>
 </div>-->
 <div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li><a class="add" href="${ctx}/jxhd/img/config" target="navTab"><span>刷新列表</span></a></li>
+        </ul>
+    </div>
     <table class="table" width="100%" layoutH="85">
         <thead>
         <tr align="center">

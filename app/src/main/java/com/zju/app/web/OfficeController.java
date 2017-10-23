@@ -26,7 +26,9 @@ public class OfficeController {
         String html = HtmlUtil.generateHTML(path);
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
+        //response.setHeader();
         response.getWriter().print(html);
+
     }
 
 

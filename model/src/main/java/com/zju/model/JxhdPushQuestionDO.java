@@ -3,6 +3,7 @@ package com.zju.model;
 import com.zju.utils.jpa.BaseDomain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by lujie on 2017/9/11.
@@ -45,6 +46,9 @@ public class JxhdPushQuestionDO{
 
     //试题解析
     private String parsing;
+
+    @Column(name = "date_created")
+    private Date dateCreated;
 
     public Integer getId() {
         return id;
@@ -132,5 +136,13 @@ public class JxhdPushQuestionDO{
 
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
  */
 
 public class JxhdStudentAnswerPhoneDO {
+    private Integer id;
 
     private Integer paperId;
 
@@ -16,11 +17,22 @@ public class JxhdStudentAnswerPhoneDO {
 
     private String username;
 
+    //如果是拍照上传，传过来的answer是一张图片，correctAnswer为空
     private String answer;
 
     private String correctAnswer;
 
     private Integer correct;
+
+    private Integer questionType;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getPaperId() {
         return paperId;
@@ -68,5 +80,13 @@ public class JxhdStudentAnswerPhoneDO {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public Integer getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(Integer questionType) {
+        this.questionType = questionType;
     }
 }

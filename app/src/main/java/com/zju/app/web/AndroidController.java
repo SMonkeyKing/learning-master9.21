@@ -3,20 +3,28 @@ package com.zju.app.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zju.app.business.jxhd.service.JxhdPushImgService;
 import com.zju.app.business.jxhd.service.JxhdPushQuestionService;
 import com.zju.app.business.jxhd.service.JxhdPushService;
 import com.zju.app.business.jxhd.service.JxhdStudentAnswerService;
 import com.zju.app.business.stjj.service.QuestionService;
 import com.zju.app.bussiness.jxkj.service.CourseWareService;
+import com.zju.app.constant.Constants;
 import com.zju.model.*;
 import com.zju.utils.DataResult;
 import com.zju.utils.JsonUtils;
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Decoder;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by lujie on 2017/8/23.
@@ -40,7 +48,8 @@ public class AndroidController {
     @Autowired
     JxhdPushQuestionService jxhdPushQuestionService;
 
-
+    @Autowired
+    JxhdPushImgService jxhdPushImgService;
     //平板端获取推送的题目
     @RequestMapping(value = {"/getPushQuestion"})
     @ResponseBody
@@ -48,6 +57,83 @@ public class AndroidController {
     {
         return jxhdPushQuestionService.findAll();
     }
+
+    //平板端获取推送的截图
+    @RequestMapping(value = {"/getPushImg"})
+    @ResponseBody
+    public List<JxhdPushImgDO> getPushImg()
+    {
+        return jxhdPushImgService.findAll();
+    }
+
+    //学生的答案提交
+    @RequestMapping(value = {"/submitStuAns"},method = {RequestMethod.POST},produces = "application/json")
+    @ResponseBody
+    public String submitStuAns(@RequestBody String jxhdStudentAnswerDOs)
+    {
+        List<JxhdStudentAnswerPhoneDO> jxhdStudentAnswerPhoneDOS1 = JSONArray.parseArray(jxhdStudentAnswerDOs,JxhdStudentAnswerPhoneDO.class);
+        //jxhdStudentAnswerService.saveList(jxhdStudentAnswerDOS1);
+
+        for (JxhdStudentAnswerPhoneDO jxhdStudentAnswerPhoneDO:
+                jxhdStudentAnswerPhoneDOS1) {
+            JxhdStudentAnswerDO jxhdStudentAnswerDO = new JxhdStudentAnswerDO();
+            jxhdStudentAnswerDO.setPaperId(jxhdStudentAnswerPhoneDO.getPaperId());
+
+            if (jxhdStudentAnswerPhoneDO.getQuestionType() == 1){
+                jxhdStudentAnswerDO.setAnswer(jxhdStudentAnswerPhoneDO.getAnswer());
+            }else {
+                jxhdStudentAnswerDO.setAnswer(ToImage(jxhdStudentAnswerPhoneDO.getAnswer()));
+            }
+
+            jxhdStudentAnswerDO.setCorrect(jxhdStudentAnswerPhoneDO.getCorrect());
+            jxhdStudentAnswerDO.setCorrectAnswer(jxhdStudentAnswerPhoneDO.getCorrectAnswer());
+            jxhdStudentAnswerDO.setUsername(jxhdStudentAnswerPhoneDO.getUsername());
+            jxhdStudentAnswerDO.setUserno(jxhdStudentAnswerPhoneDO.getUserno());
+            jxhdStudentAnswerDO.setQuestionType(jxhdStudentAnswerPhoneDO.getQuestionType());
+            jxhdStudentAnswerService.save(jxhdStudentAnswerDO);
+        }
+
+        DataResult result = new DataResult();
+        result.setCode(0);
+        result.setMessage("提交成功");
+        JSONObject json = new JSONObject();
+        json.put("code","0");
+        json.put("message","提交成功");
+        return json.toString();
+    }
+
+    public String ToImage(String imageStr){
+        String str[]=imageStr.split(","); // avatar base64字符串
+        String type=str[0].split(";")[0].split(":")[1].split("/")[1];  //图片类型
+        imageStr=str[1];
+        byte[] b= decode(imageStr);  //文件流
+        //生成jpeg图片
+        System.out.println(type);
+        String name = UUID.randomUUID().toString()+"."+type;
+        String imgFilePath = Constants.FILE_ROAD_KEY+name;//新生成的图片
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(imgFilePath);
+            out.write(b);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Constants.NGINX_ROAD_KEY+name;
+    }
+    public static byte[] decode(String encodeStr)  {
+        byte[] bt = null;
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            bt = decoder.decodeBuffer(encodeStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bt;
+    }
+
+
 
     //学生的答案提交
     @RequestMapping(value = {"/submitAns"},method = {RequestMethod.POST},produces = "application/json")

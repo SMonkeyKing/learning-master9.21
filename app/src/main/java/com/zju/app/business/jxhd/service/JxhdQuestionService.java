@@ -66,4 +66,8 @@ public class JxhdQuestionService {
         return jxhdQuestionRepos.findOne(id);
     }
 
+    public void delete(Integer id){
+        jxhdQuestionRepos.delete(id);
+    }
+
 }

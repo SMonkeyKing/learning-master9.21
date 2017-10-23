@@ -59,7 +59,7 @@ public class WordUtil {
             wordToHtmlConverter.setPicturesManager((content, pictureType, suggestedName, widthInches, heightInches) -> {
                 //图片的路径
                 String resultName = HtmlUtil.FILE_DIR + uuid + "\\" + suggestedName;
-                String resultName1 =" http://localhost/courseWare/"+ uuid + "/" + suggestedName;
+                String resultName1 ="http://localhost/courseWare/"+ uuid + "/" + suggestedName;
                 generatePicture(content, resultName);
                 return resultName1;
             });

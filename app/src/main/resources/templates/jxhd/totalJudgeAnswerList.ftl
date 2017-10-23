@@ -15,7 +15,7 @@
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <li><a class="add" href="${ctx}/jxhd/img/stuAns" target="_blank"><span>查看上传的图片列表</span></a></li>
+            <li><a class="add" href="${ctx}/jxhd/studentAns" target="navTab"><span>刷新列表</span></a></li>
         </ul>
     </div>
     <table class="table" width="100%" layoutH="85">
@@ -79,10 +79,10 @@
 <div class="top"></div>
 
 <script language="JavaScript">
-    jQuery(document).ready(function()
+    /*jQuery(document).ready(function()
     {
         setTimeout('myrefresh()',30000); //指定1秒刷新一次
-    });
+    });*/
     function myrefresh(){
         $.getJSON("${ctx}/jxhd/studentAns",function () {
 

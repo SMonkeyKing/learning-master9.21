@@ -1,3 +1,11 @@
+<style>
+    .myEditor p{
+        height: auto;
+        width: 750px;
+        margin: 0px 0px;
+        padding: 2px 0px;
+    }
+</style>
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor1 = new E('#editor1');
@@ -94,7 +102,7 @@
                     <dt>题目描述：</dt>
                     <dd>
                         <input  type="hidden" id="question" name="question" />
-                        <div id="editor1" name="editorContent" style="width: 800px;">
+                        <div class="myEditor"  id="editor1" name="editorContent" style="width: 800px;">
 
                         </div>
                         <#--<div>
@@ -122,7 +130,7 @@
                             <textarea id="answer" class="editor" style="width:650px;height:500px;"></textarea>
                         </div>-->
                         <input  type="hidden" id="answer" name="answer" />
-                        <div id="editor2" name="editorAnswer" style="width: 800px;">
+                        <div class="myEditor" id="editor2" name="editorAnswer" style="width: 800px;">
 
                         </div>
                             <#--<div >

@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * Created by lujie on 2017/8/19.
- * 同步测试
+ * 试卷测试
  */
 @Entity
-@Table(name = "school_test")
+@Table(name = "paper_test")
 public class SyncTestDO extends BaseDomain{
 
     @Id
@@ -30,8 +30,14 @@ public class SyncTestDO extends BaseDomain{
     @Column(name = "answer_url")
     private String answerUrl;
 
-    @Column(name = "xzt_answer")
-    private String xztAnswer;
+    @Column(name = "answer_name")
+    private String answerName;
+
+    @Column(name = "tkjs_answer")
+    private String answer;
+
+    @Column(name = "xzt_num")
+    private Integer xztNum;
 
     public Integer getId() {
         return id;
@@ -65,12 +71,20 @@ public class SyncTestDO extends BaseDomain{
         this.answerUrl = answerUrl;
     }
 
-    public String getXztAnswer() {
-        return xztAnswer;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setXztAnswer(String xztAnswer) {
-        this.xztAnswer = xztAnswer;
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Integer getXztNum() {
+        return xztNum;
+    }
+
+    public void setXztNum(Integer xztNum) {
+        this.xztNum = xztNum;
     }
 
     public String getUpload_name() {
@@ -87,5 +101,13 @@ public class SyncTestDO extends BaseDomain{
 
     public void setTypeid(Integer typeid) {
         this.typeid = typeid;
+    }
+
+    public String getAnswerName() {
+        return answerName;
+    }
+
+    public void setAnswerName(String answerName) {
+        this.answerName = answerName;
     }
 }
