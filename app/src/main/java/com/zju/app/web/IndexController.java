@@ -2,7 +2,11 @@ package com.zju.app.web;
 
 import com.zju.app.business.stjj.service.LeftMenuService;
 import com.zju.app.constant.Constants;
+import com.zju.app.web.service.UserTService;
+import com.zju.model.ConfigTDo;
 import com.zju.model.LeftMenuDO;
+import com.zju.model.UserDO;
+import com.zju.repository.ConfigTRepos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
-
 
 /*
 * Created by lujie on 2017/8/14.
@@ -34,51 +38,65 @@ public class IndexController {
     @Autowired
     LeftMenuService leftMenuService;
 
+    @Autowired
+    ConfigTRepos configTRepos;
+
+    @Autowired
+    UserTService userTService;
     @RequestMapping(value = {"", "index.htm", "index.html"}, method = RequestMethod.GET)
     public String mainIndex() {
+        List<ConfigTDo> configTDos =(List<ConfigTDo>) configTRepos.findAll();
+        if(configTDos!=null)
+        {
+            Constants.NGINX_ROAD_KEY = "http://"+configTDos.get(0).getIp()+"/"+configTDos.get(0).getDictionary()+"/";
+            Constants.FILE_ROAD_KEY = configTDos.get(0).getFullFileRoad();
+        }else
+        {
+            try {
+                Constants.NGINX_ROAD_KEY = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }
         return "main";
     }
 
-    @RequestMapping(value = {"/index"})
+    @RequestMapping(value = {"/index"}, method = RequestMethod.POST)
     public ModelAndView index(@RequestParam(name = "role") Integer roleId, HttpServletRequest request) throws UnknownHostException {
         ModelAndView mv = new ModelAndView("allIndex");
-        List<LeftMenuDO> leftmenu = leftMenuService.findAll(roleId);
-
-        //把role存在session中
-        request.getSession().setAttribute(Constants.ROLE_KEY, roleId);
-        /*for (LeftMenuDO menu:leftmenu
-                ) {
-            logger.info(menu.getTitle());
-            List<LeftMenuDO> submenu = menu.getSubmenus();
-            logger.info("sub1.size()"+submenu.size());
-            for (LeftMenuDO sub:submenu
-                 ) {
-                logger.info(sub.getTitle());
-                List<LeftMenuDO> submenu1 = sub.getSubmenus();
-                logger.info("sub2.size()"+submenu1.size());
-                for (LeftMenuDO sub1:submenu1
-                     ) {
-                    logger.info(sub1.getTitle());
-                }
+        //学生登录不用判断
+        if(roleId!=2)
+        {
+            String username = request.getParameter("username").trim();
+            String password = request.getParameter("password").trim();
+            UserDO userDO = userTService.getUserByName(username);
+            if(userDO!=null && userDO.getPassWord().equals(password))
+            {
+                userDO.setLastLoginTime(new Date());
+                userTService.save(userDO);
+                request.getSession().setAttribute("user",userDO);
+                List<LeftMenuDO> leftmenu = leftMenuService.findAll(roleId);
+                //把role存在session中
+                request.getSession().setAttribute(Constants.ROLE_KEY, roleId);
+                mv.addObject("leftmenu", leftmenu);
+                mv.addObject("role", roleId);
+                String ip1 = InetAddress.getLocalHost().getHostAddress().toString();
+                mv.addObject("ip", ip1);
+            }else{
+                mv = new ModelAndView("loginIndex");
+                mv.addObject("tips","用户名或者密码错误，请重新输入");
             }
-
-        }*/
-        mv.addObject("leftmenu", leftmenu);
-        mv.addObject("role", roleId);
-        //String loginIp = request.getRemoteAddr();
-        //String ip = request.getRemoteHost();
-
-        //mv.addObject("ip",loginIp);
-        String ip1 = InetAddress.getLocalHost().getHostAddress().toString();
-        mv.addObject("ip", ip1);
+        }
         return mv;
     }
 
     //教师专区需要登录
     //学生专区不用登录
     @RequestMapping(value = {"/loginIndex"})
-    public String login() {
-        return "loginIndex";
+    public ModelAndView login() {
+        ModelAndView mv = new ModelAndView("loginIndex");
+        mv.addObject("tips","");
+        return mv;
     }
 
 
