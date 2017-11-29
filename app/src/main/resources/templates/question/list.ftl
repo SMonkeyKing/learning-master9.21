@@ -72,19 +72,6 @@
                 </li>
             </ul>
         </div>
-        <#--<div class="subBar" style="float: right">
-            <table>
-                <tr>
-                    <td style="float: right"><a class="button" href="#" id="addAll" onclick="addAllToPaper()">全部加入试卷</a></td>
-                    <td style="float: right"><a class="button" href="${ctx}/paper/paperBasket" target="dialog" ><span>查看试题篮</span></a></td>
-                </tr>
-            </table>
-        </div>-->
-        <#--<div class="panelBar">
-            <a class="button" href="${ctx}/paper/paperBasket" target="dialog" ><span>查看试题篮</span></a>
-            <span>&nbsp;&nbsp;</span>
-            <a class="button" href="#"  onclick="addAllToPaper();" ><span>全部加入试卷</span></span></a>
-        </div>-->
 </div>
 <div class="pageContent">
    <div class="panelBar">
